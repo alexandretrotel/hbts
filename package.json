@@ -1,5 +1,5 @@
 {
-  "name": "habits",
+  "name": "hbts",
   "type": "module",
   "private": true,
   "bin": {
@@ -7,7 +7,8 @@
   },
   "scripts": {
     "dev": "bun run src/index.ts",
-    "build": "bun build src/index.ts --outdir=dist --target=bun --minify",
+    "clean": "rm -rf dist",
+    "build": "bun run clean && bun build src/index.ts --outdir=dist --target=node --minify",
     "start": "bun run src/index.ts",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",

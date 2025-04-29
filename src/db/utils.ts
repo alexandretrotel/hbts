@@ -1,4 +1,4 @@
-import { desc } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { db } from "./index";
 import { habits } from "./schema";
 import type { InsertHabit } from "./zod";
@@ -15,4 +15,12 @@ export async function insertHabit(data: InsertHabit) {
 
 export async function getHabits() {
   return db.select().from(habits).orderBy(desc(habits.createdAt));
+}
+
+export async function renameHabit(id: string, newName: string) {
+  return db
+    .update(habits)
+    .set({ name: newName })
+    .where(eq(habits.id, id))
+    .returning();
 }

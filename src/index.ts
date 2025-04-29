@@ -1,5 +1,4 @@
-#!/usr/bin/env bun
-
+#!/usr/bin/env node
 import { Command } from "commander";
 import dotenv from "dotenv";
 import os from "os";
@@ -23,8 +22,8 @@ if (!process.env.DATABASE_URL) {
 // Initialize the CLI program
 const program = new Command();
 program
-  .name("habits")
-  .description("CLI to track bad habits with progress tracking")
+  .name("hbts")
+  .description("Track bad habits with progress tracking")
   .version("1.0.0");
 
 // Register commands

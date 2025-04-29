@@ -1,3 +1,4 @@
+import { MILESTONES } from "./data";
 import type { SelectHabit } from "./db/zod";
 import { formatDate } from "./utils";
 
@@ -29,16 +30,45 @@ export function calculateProgress(habits: SelectHabit[]): Progress {
     return { percentage: 0, level: 1 };
   }
 
+  // Calculate total abstinence time in milliseconds
   const now = new Date();
-  const totalDays = habits.reduce((sum, habit) => {
+  const totalMs = habits.reduce((sum, habit) => {
     const diffMs = now.getTime() - habit.startedAt.getTime();
-    return sum + diffMs / (1000 * 3600 * 24);
+    return sum + diffMs;
   }, 0);
 
-  // Simple progression: 1 level per 30 days of total abstinence
-  const level = Math.floor(totalDays / 30) + 1;
-  // Percentage based on progress towards next level
-  const percentage = ((totalDays % 30) / 30) * 100;
+  // Determine current level
+  let level = 1;
+  let currentMilestone = 0;
+  let nextMilestone = MILESTONES[0] || 0;
+  const numberOfMilestones = MILESTONES.length;
+  const lastMilestone = MILESTONES[numberOfMilestones - 1] || 0;
 
-  return { percentage, level };
+  for (let i = 0; i < numberOfMilestones; i++) {
+    const milestone = MILESTONES[i] || 0;
+
+    if (totalMs >= milestone) {
+      level = i + 2; // Level 1 is before first milestone, so +2
+      currentMilestone = milestone;
+      nextMilestone = MILESTONES[i + 1] || lastMilestone; // Use last milestone for post-year
+    } else {
+      break;
+    }
+  }
+
+  // Handle levels beyond 11 (every 6 months after 1 year)
+  if (totalMs > lastMilestone) {
+    const sixMonthsMs = 15_768_000_000; // 6 months
+    const yearsPassed = Math.floor((totalMs - lastMilestone) / sixMonthsMs);
+    level += yearsPassed;
+    currentMilestone = lastMilestone + yearsPassed * sixMonthsMs;
+    nextMilestone = currentMilestone + sixMonthsMs;
+  }
+
+  // Calculate percentage progress toward next level
+  const progressToNext = totalMs - currentMilestone;
+  const totalToNext = nextMilestone - currentMilestone;
+  const percentage = (progressToNext / totalToNext) * 100;
+
+  return { percentage: Math.min(percentage, 100), level };
 }
