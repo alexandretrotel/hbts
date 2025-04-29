@@ -8,6 +8,20 @@ import chalk from "chalk";
 import ora from "ora";
 import { createInterface } from "readline";
 import { table } from "table";
+import dotenv from "dotenv";
+import os from "os";
+import path from "path";
+
+const homeEnvPath = path.join(os.homedir(), ".habits.env");
+const localEnvPath = path.join(__dirname, "../../.env");
+dotenv.config({ path: [homeEnvPath, localEnvPath] });
+
+if (!process.env.DATABASE_URL) {
+  console.error(
+    chalk.red("Error: DATABASE_URL is not defined in ~/.habits.env or .env")
+  );
+  process.exit(1);
+}
 
 const program = new Command();
 export const rl = createInterface({
