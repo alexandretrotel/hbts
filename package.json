@@ -5,7 +5,6 @@
   "author": "Alexandre Trotel",
   "license": "MIT",
   "type": "module",
-  "private": true,
   "bin": {
     "habits": "./dist/index.js"
   },
