@@ -1,5 +1,4 @@
 import { Command } from "commander";
-import { db } from "./db";
 import { getHabits, insertHabit } from "./db/utils";
 import { insertHabitSchema } from "./db/zod";
 
