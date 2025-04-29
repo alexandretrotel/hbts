@@ -3,7 +3,7 @@ import chalk from "chalk";
 import ora from "ora";
 import { insertHabit } from "../db/utils";
 import { insertHabitSchema } from "../db/zod";
-import { formatDate } from "../utils";
+import { formatDate } from "../utils/dates";
 
 export async function addHabitCommand(habit: string) {
   try {

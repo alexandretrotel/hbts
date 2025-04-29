@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
 import { getHabits } from "../db/utils";
-import { calculateProgress, formatTimeSince } from "../progress";
+import { calculateProgress, formatTimeSince } from "../utils/progress";
 import { table } from "table";
 import cliProgress from "cli-progress";
 import type { SelectHabit } from "../db/zod";

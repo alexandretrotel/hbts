@@ -11,14 +11,6 @@ const homeEnvPath = path.join(os.homedir(), ".habits.env");
 const localEnvPath = path.join(__dirname, "../../.env");
 dotenv.config({ path: [homeEnvPath, localEnvPath] });
 
-// Validate DATABASE_URL
-if (!process.env.DATABASE_URL) {
-  console.error(
-    chalk.red("Error: DATABASE_URL is not defined in ~/.habits.env or .env")
-  );
-  process.exit(1);
-}
-
 // Initialize the CLI program
 const program = new Command();
 program
@@ -29,5 +21,15 @@ program
 // Register commands
 init(program);
 
-// Parse and execute
-program.parse();
+// Parse arguments
+const args = program.parse(process.argv);
+
+// Validate DATABASE_URL only if not running the setup command
+if (args.args[0] !== "setup" && !process.env.DATABASE_URL) {
+  console.error(
+    chalk.red(
+      "Error: DATABASE_URL is not defined in ~/.habits.env or .env. Run 'habits setup' to configure it."
+    )
+  );
+  process.exit(1);
+}
