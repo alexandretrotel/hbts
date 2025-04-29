@@ -2,9 +2,12 @@
   "name": "habits",
   "type": "module",
   "private": true,
+  "bin": {
+    "habits": "./dist/index.js"
+  },
   "scripts": {
     "dev": "bun run src/index.ts",
-    "build": "bun build src/index.ts --outdir=dist --target=node",
+    "build": "bun build src/index.ts --outdir=dist --target=bun --minify",
     "start": "bun run src/index.ts",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",

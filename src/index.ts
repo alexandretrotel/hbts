@@ -1,3 +1,5 @@
+#!/usr/bin/env bun
+
 import { Command } from "commander";
 import { getHabits, insertHabit } from "./db/utils";
 import { insertHabitSchema } from "./db/zod";
