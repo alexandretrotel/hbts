@@ -1,4 +1,4 @@
-# habits
+# hbts
 
 To install dependencies:
 
