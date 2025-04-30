@@ -18,7 +18,7 @@ export class GoodHabitService {
     private motivationService: MotivationService
   ) {}
 
-  async addHabit(data: Omit<InsertHabit, 'type' | 'startedAt'>) {
+  async addHabit(data: Omit<InsertHabit, 'type' | 'stoppedAt'>) {
     const parsedData = insertHabitSchema.parse({
       ...data,
       type: 'good',

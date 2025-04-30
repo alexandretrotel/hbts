@@ -31,7 +31,7 @@ export const habits = pgTable('habits', {
   isOptional: boolean('is_optional').default(false),
   goal: real('goal'), // For quantitative habits (e.g., 10 push-ups)
   unit: text('unit'), // For quantitative habits (e.g., "push-ups", "pages")
-  stoppedAt: timestamp('started_at').notNull(), // For bad habits
+  stoppedAt: timestamp('started_at'), // For bad habits
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 

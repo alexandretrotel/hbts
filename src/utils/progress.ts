@@ -33,7 +33,8 @@ export function calculateProgress(habits: SelectHabit[]): Progress {
   // Calculate total abstinence time in milliseconds
   const now = new Date();
   const totalMs = habits.reduce((sum, habit) => {
-    const diffMs = now.getTime() - habit.startedAt.getTime();
+    const stoppedAt = habit.stoppedAt || new Date(0);
+    const diffMs = now.getTime() - stoppedAt.getTime();
     return sum + diffMs;
   }, 0);
 
