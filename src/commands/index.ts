@@ -6,6 +6,11 @@ import { setupCommand } from "./setup";
 
 export function init(program: Command) {
   program
+    .command("setup")
+    .description("Set up the habits CLI for the first time")
+    .action(setupCommand);
+
+  program
     .command("add")
     .description("Record when you stopped a bad habit")
     .argument(
@@ -23,9 +28,4 @@ export function init(program: Command) {
     .command("rename")
     .description("Rename an existing habit")
     .action(renameHabitCommand);
-
-  program
-    .command("setup")
-    .description("Set up the habits CLI for the first time")
-    .action(setupCommand);
 }
