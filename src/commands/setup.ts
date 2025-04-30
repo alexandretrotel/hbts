@@ -6,8 +6,6 @@ import path from "path";
 import os from "os";
 
 export async function setupCommand() {
-  const spinner = ora("Setting up habits CLI...").start();
-
   try {
     // Prompt for DATABASE_URL
     const { databaseUrl } = await inquirer.prompt([
@@ -34,6 +32,7 @@ export async function setupCommand() {
     ]);
 
     // Define the path for ~/.habits.env
+    const spinner = ora("Setting up habits CLI...").start();
     const homeEnvPath = path.join(os.homedir(), ".habits.env");
 
     // Write DATABASE_URL to ~/.habits.env
@@ -47,6 +46,6 @@ export async function setupCommand() {
     console.log(chalk.cyan("You can now use the 'habits' command."));
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    spinner.fail(chalk.red(`Error setting up habits CLI: ${message}`));
+    console.log(chalk.red(`Error setting up habits CLI: ${message}`));
   }
 }
