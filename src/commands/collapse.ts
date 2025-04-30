@@ -1,27 +1,27 @@
-import chalk from "chalk";
-import ora from "ora";
-import { collapseHabit, getHabits } from "@/db/utils";
-import inquirer from "inquirer";
-import { formatTimeSince } from "@/utils/progress";
+import chalk from 'chalk';
+import ora from 'ora';
+import { collapseHabit, getHabits } from '@/db/utils';
+import inquirer from 'inquirer';
+import { formatTimeSince } from '@/utils/progress';
 
 export async function collapseHabitCommand() {
   try {
-    const spinner = ora("Fetching habits...").start();
+    const spinner = ora('Fetching habits...').start();
     const habits = await getHabits();
 
     if (habits.length === 0) {
-      spinner.warn(chalk.yellow("No habits recorded yet."));
+      spinner.warn(chalk.yellow('No habits recorded yet.'));
       return;
     }
 
-    spinner.succeed(chalk.green("Habits retrieved successfully."));
+    spinner.succeed(chalk.green('Habits retrieved successfully.'));
 
     // Prompt user to select habits to collapse
     const { selectedHabits } = await inquirer.prompt([
       {
-        type: "checkbox",
-        name: "selectedHabits",
-        message: "Select habits to delete:",
+        type: 'checkbox',
+        name: 'selectedHabits',
+        message: 'Select habits to delete:',
         choices: habits.map((habit) => ({
           name: `${habit.name} (Stopped: ${formatTimeSince(habit.stoppedAt)})`,
           value: { id: habit.id, name: habit.name },

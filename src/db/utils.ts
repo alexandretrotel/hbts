@@ -1,7 +1,7 @@
-import { desc, eq } from "drizzle-orm";
-import { db } from "@/db";
-import { habits } from "./schema";
-import type { InsertHabit } from "./zod";
+import { desc, eq } from 'drizzle-orm';
+import { db } from '@/db';
+import { habits } from './schema';
+import type { InsertHabit } from './zod';
 
 export async function insertHabit(data: InsertHabit) {
   return db

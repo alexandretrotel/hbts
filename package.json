@@ -13,7 +13,7 @@
     "clean": "rm -rf dist",
     "build": "bun run clean && bun build src/index.ts --outdir=dist --target=node --minify",
     "start": "bun run src/index.ts",
-    "lint": "bun run eslint .",
+    "lint": "eslint .",
     "format": "prettier --write .",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
@@ -21,10 +21,21 @@
     "db:studio": "drizzle-kit studio"
   },
   "devDependencies": {
+    "@eslint/js": "^9.25.1",
+    "@eslint/json": "^0.12.0",
+    "@eslint/markdown": "^6.4.0",
     "@types/bun": "latest",
     "@types/cli-progress": "^3.11.6",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
     "drizzle-kit": "^0.31.0",
-    "tsx": "^4.19.4"
+    "eslint": "^9.25.1",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.2.6",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3",
+    "tsx": "^4.19.4",
+    "typescript-eslint": "^8.31.1"
   },
   "peerDependencies": {
     "typescript": "^5"

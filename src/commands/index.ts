@@ -1,46 +1,46 @@
-import { Command } from "commander";
-import { setupCommand } from "./setup";
+import { Command } from 'commander';
+import { setupCommand } from './setup';
 
 export async function init(program: Command) {
   program
-    .command("setup")
-    .description("Set up the habits CLI for the first time")
+    .command('setup')
+    .description('Set up the habits CLI for the first time')
     .action(setupCommand);
 
   if (process.env.DATABASE_URL) {
-    const { renameHabitCommand } = await import("./rename");
-    const { addHabitCommand } = await import("./add");
-    const { listHabitsCommand } = await import("./list");
-    const { deleteHabitCommand } = await import("./delete");
-    const { collapseHabitCommand } = await import("./collapse");
+    const { renameHabitCommand } = await import('./rename');
+    const { addHabitCommand } = await import('./add');
+    const { listHabitsCommand } = await import('./list');
+    const { deleteHabitCommand } = await import('./delete');
+    const { collapseHabitCommand } = await import('./collapse');
 
     program
-      .command("add")
-      .description("Record when you stopped a bad habit")
+      .command('add')
+      .description('Record when you stopped a bad habit')
       .argument(
-        "<habit>",
+        '<habit>',
         'Name of the habit (e.g., "watching porn", "smoking", etc...)'
       )
       .action(addHabitCommand);
 
     program
-      .command("list")
-      .description("List all recorded habits with progress")
+      .command('list')
+      .description('List all recorded habits with progress')
       .action(listHabitsCommand);
 
     program
-      .command("rename")
-      .description("Rename an existing habit")
+      .command('rename')
+      .description('Rename an existing habit')
       .action(renameHabitCommand);
 
     program
-      .command("delete")
-      .description("Delete an existing habit")
+      .command('delete')
+      .description('Delete an existing habit')
       .action(deleteHabitCommand);
 
     program
-      .command("collapse")
-      .description("Collapse an existing habit (i.e. remove all progress)")
+      .command('collapse')
+      .description('Collapse an existing habit (i.e. remove all progress)')
       .action(collapseHabitCommand);
   }
 }

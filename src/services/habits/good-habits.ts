@@ -1,16 +1,16 @@
-import { eq, and } from "drizzle-orm";
-import { db } from "@/db";
-import { habits, habitLogs } from "@/db/schema";
+import { eq, and } from 'drizzle-orm';
+import { db } from '@/db';
+import { habits, habitLogs } from '@/db/schema';
 import {
   insertHabitSchema,
   insertHabitLogSchema,
   type SelectHabit,
   type SelectHabitLog,
   type InsertHabit,
-} from "@/db/zod";
-import { GamificationService } from "@/gamification";
-import { MotivationService } from "@/motivation";
-import { AppError } from "@/utils/errors";
+} from '@/db/zod';
+import { GamificationService } from '@/gamification';
+import { MotivationService } from '@/motivation';
+import { AppError } from '@/utils/errors';
 
 export class GoodHabitService {
   constructor(
@@ -18,10 +18,10 @@ export class GoodHabitService {
     private motivationService: MotivationService
   ) {}
 
-  async addHabit(data: Omit<InsertHabit, "type" | "startedAt">) {
+  async addHabit(data: Omit<InsertHabit, 'type' | 'startedAt'>) {
     const parsedData = insertHabitSchema.parse({
       ...data,
-      type: "good",
+      type: 'good',
       startedAt: new Date(),
     });
 
@@ -34,11 +34,11 @@ export class GoodHabitService {
     const habit = await db
       .select()
       .from(habits)
-      .where(and(eq(habits.id, habitId), eq(habits.type, "good")))
+      .where(and(eq(habits.id, habitId), eq(habits.type, 'good')))
       .limit(1);
 
     if (!habit[0]) {
-      throw new AppError("Habit not found or not a good habit");
+      throw new AppError('Habit not found or not a good habit');
     }
 
     const logData = insertHabitLogSchema.parse({
@@ -71,7 +71,7 @@ export class GoodHabitService {
       .limit(1);
 
     if (!habit[0]) {
-      throw new AppError("Habit not found");
+      throw new AppError('Habit not found');
     }
 
     const stats = this.calculateStats(habit[0], logs);

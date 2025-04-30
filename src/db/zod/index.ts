@@ -1,6 +1,6 @@
-import type { z } from "zod";
-import * as schema from "../schema";
-import { createSelectSchema, createInsertSchema } from "drizzle-zod";
+import type { z } from 'zod';
+import * as schema from '../schema';
+import { createSelectSchema, createInsertSchema } from 'drizzle-zod';
 
 // habits table
 export const selectHabitSchema = createSelectSchema(schema.habits);

@@ -1,26 +1,26 @@
 #!/usr/bin/env node
-import { Command } from "commander";
-import dotenv from "dotenv";
-import os from "os";
-import path from "path";
-import { init } from "@/commands";
-import chalk from "chalk";
-import { readFile } from "fs/promises";
+import { Command } from 'commander';
+import dotenv from 'dotenv';
+import os from 'os';
+import path from 'path';
+import { init } from '@/commands';
+import chalk from 'chalk';
+import { readFile } from 'fs/promises';
 
 // Load environment variables from ~/.habits.env or .env
-const homeEnvPath = path.join(os.homedir(), ".habits.env");
-const localEnvPath = path.join(__dirname, "../.env");
+const homeEnvPath = path.join(os.homedir(), '.habits.env');
+const localEnvPath = path.join(__dirname, '../.env');
 dotenv.config({ path: [homeEnvPath, localEnvPath] });
 
 // Get version from package.json
-const packageJsonPath = path.join(__dirname, "../package.json");
-const packageJsonData = await readFile(packageJsonPath, "utf-8");
+const packageJsonPath = path.join(__dirname, '../package.json');
+const packageJsonData = await readFile(packageJsonPath, 'utf-8');
 const packageJson = JSON.parse(packageJsonData);
 
 // Check if the package.json file is valid
-if (!packageJson || typeof packageJson.version !== "string") {
+if (!packageJson || typeof packageJson.version !== 'string') {
   console.error(
-    chalk.red("Error: Invalid package.json file. Version not found.")
+    chalk.red('Error: Invalid package.json file. Version not found.')
   );
   process.exit(1);
 }
@@ -31,8 +31,8 @@ const version: string = packageJson.version;
 // Initialize the CLI program
 const program = new Command();
 program
-  .name("hbts")
-  .description("Track bad habits with progress tracking")
+  .name('hbts')
+  .description('Track bad habits with progress tracking')
   .version(version);
 
 // Register commands
@@ -42,7 +42,7 @@ await init(program);
 const args = program.parse(process.argv);
 
 // Validate DATABASE_URL only if not running the setup command
-if (args.args[0] !== "setup" && !process.env.DATABASE_URL) {
+if (args.args[0] !== 'setup' && !process.env.DATABASE_URL) {
   console.error(
     chalk.red(
       "Error: DATABASE_URL is not defined in ~/.habits.env or .env. Run 'habits setup' to configure it."

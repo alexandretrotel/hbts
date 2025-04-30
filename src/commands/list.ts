@@ -1,31 +1,31 @@
-import inquirer from "inquirer";
-import chalk from "chalk";
-import ora from "ora";
-import { getHabits } from "@/db/utils";
-import { calculateProgress, formatTimeSince } from "@/utils/progress";
-import { table } from "table";
-import cliProgress from "cli-progress";
-import type { SelectHabit } from "@/db/zod";
+import inquirer from 'inquirer';
+import chalk from 'chalk';
+import ora from 'ora';
+import { getHabits } from '@/db/utils';
+import { calculateProgress, formatTimeSince } from '@/utils/progress';
+import { table } from 'table';
+import cliProgress from 'cli-progress';
+import type { SelectHabit } from '@/db/zod';
 
 export async function listHabitsCommand() {
   try {
-    const spinner = ora("Fetching habits...").start();
+    const spinner = ora('Fetching habits...').start();
     const habits = await getHabits();
 
     if (habits.length === 0) {
-      spinner.warn(chalk.yellow("No habits recorded yet."));
+      spinner.warn(chalk.yellow('No habits recorded yet.'));
       return;
     }
 
-    spinner.succeed(chalk.green("Habits retrieved successfully."));
+    spinner.succeed(chalk.green('Habits retrieved successfully.'));
 
     // Calculate overall progress
     const totalProgress = calculateProgress(habits);
     const progressBar = new cliProgress.SingleBar(
       {
-        format: "Overall Progress |{bar}| {percentage}% (Level {level})",
-        barCompleteChar: "\u2588",
-        barIncompleteChar: "\u2591",
+        format: 'Overall Progress |{bar}| {percentage}% (Level {level})',
+        barCompleteChar: '\u2588',
+        barIncompleteChar: '\u2591',
         hideCursor: true,
       },
       cliProgress.Presets.shades_classic
@@ -40,9 +40,9 @@ export async function listHabitsCommand() {
     // Prompt user to select habits to view progress
     const { selectedHabits } = await inquirer.prompt([
       {
-        type: "checkbox",
-        name: "selectedHabits",
-        message: "Select habits to view progress:",
+        type: 'checkbox',
+        name: 'selectedHabits',
+        message: 'Select habits to view progress:',
         choices: habits.map((habit) => ({
           name: `${habit.name} (Stopped: ${formatTimeSince(habit.stoppedAt)})`,
           value: habit.id,
@@ -57,7 +57,7 @@ export async function listHabitsCommand() {
 
     // Display table
     const tableData = [
-      [chalk.bold("Habit"), chalk.bold("Stopped"), chalk.bold("Time Since")],
+      [chalk.bold('Habit'), chalk.bold('Stopped'), chalk.bold('Time Since')],
       ...habitsToShow.map(({ name, stoppedAt }) => [
         name,
         formatTimeSince(stoppedAt),
@@ -86,7 +86,7 @@ function startLiveTimer(habits: SelectHabit[]) {
   if (habits.length === 0) return;
 
   console.log(
-    chalk.cyan("Live progress (updates every second, Ctrl+C to stop):")
+    chalk.cyan('Live progress (updates every second, Ctrl+C to stop):')
   );
 
   const update = () => {
@@ -94,7 +94,7 @@ function startLiveTimer(habits: SelectHabit[]) {
     console.log(chalk.gray("Press 'Ctrl+C' to stop live progress."));
 
     const tableData = [
-      [chalk.bold("Habit"), chalk.bold("Time Since")],
+      [chalk.bold('Habit'), chalk.bold('Time Since')],
       ...habits.map((habit) => [
         habit.name,
         formatTimeSince(habit.stoppedAt, true),
@@ -114,11 +114,11 @@ function startLiveTimer(habits: SelectHabit[]) {
   const interval = setInterval(update, 1000);
 
   // Handle SIGINT (Ctrl+C) explicitly
-  process.on("SIGINT", () => {
+  process.on('SIGINT', () => {
     clearInterval(interval);
     if (process.stdin.isTTY) process.stdin.setRawMode(false); // Reset raw mode
     process.stdin.pause();
-    console.log(chalk.gray("\nStopped live progress."));
+    console.log(chalk.gray('\nStopped live progress.'));
     process.exit(0);
   });
 }

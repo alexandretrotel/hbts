@@ -18,4 +18,3 @@ But you should rather install it globally and setup your own Neon database:
 bun add -g hbts
 habits setup
 ```
-
