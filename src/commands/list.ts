@@ -6,6 +6,7 @@ import { calculateProgress, formatTimeSince } from "../utils/progress";
 import { table } from "table";
 import cliProgress from "cli-progress";
 import type { SelectHabit } from "../db/zod";
+import readline from "readline";
 
 export async function listHabitsCommand() {
   try {
@@ -91,6 +92,8 @@ function startLiveTimer(habits: SelectHabit[]) {
 
   const update = () => {
     console.clear();
+    console.log(chalk.gray("Press 'q' to quit the timer.\n"));
+
     const tableData = [
       [chalk.bold("Habit"), chalk.bold("Time Since")],
       ...habits.map((habit) => [
@@ -111,10 +114,15 @@ function startLiveTimer(habits: SelectHabit[]) {
   update(); // Initial render
   const interval = setInterval(update, 1000);
 
-  // Handle Ctrl+C to stop the timer
-  process.on("SIGINT", () => {
-    clearInterval(interval);
-    console.log(chalk.gray("Stopped live progress."));
-    process.exit(0);
+  // Set up keypress listener
+  readline.emitKeypressEvents(process.stdin);
+  if (process.stdin.isTTY) process.stdin.setRawMode(true);
+
+  process.stdin.on("keypress", (_, key) => {
+    if (key.name === "q" || (key.ctrl && key.name === "c")) {
+      clearInterval(interval);
+      console.log(chalk.gray("\nStopped live progress."));
+      process.exit(0);
+    }
   });
 }
