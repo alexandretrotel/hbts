@@ -6,7 +6,6 @@ import { calculateProgress, formatTimeSince } from "../utils/progress";
 import { table } from "table";
 import cliProgress from "cli-progress";
 import type { SelectHabit } from "../db/zod";
-import readline from "readline";
 
 export async function listHabitsCommand() {
   try {
