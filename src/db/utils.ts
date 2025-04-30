@@ -24,3 +24,15 @@ export async function renameHabit(id: string, newName: string) {
     .where(eq(habits.id, id))
     .returning();
 }
+
+export async function deleteHabit(id: string) {
+  return db.delete(habits).where(eq(habits.id, id)).returning();
+}
+
+export async function collapseHabit(id: string) {
+  return db
+    .update(habits)
+    .set({ startedAt: new Date() })
+    .where(eq(habits.id, id))
+    .returning();
+}

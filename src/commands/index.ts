@@ -1,5 +1,7 @@
 import { Command } from "commander";
 import { setupCommand } from "./setup";
+import { deleteHabitCommand } from "./delete";
+import { collapseHabitCommand } from "./collapse";
 
 export async function init(program: Command) {
   program
@@ -30,5 +32,15 @@ export async function init(program: Command) {
       .command("rename")
       .description("Rename an existing habit")
       .action(renameHabitCommand);
+
+    program
+      .command("delete")
+      .description("Delete an existing habit")
+      .action(deleteHabitCommand);
+
+    program
+      .command("collapse")
+      .description("Collapse a habit")
+      .action(collapseHabitCommand);
   }
 }
