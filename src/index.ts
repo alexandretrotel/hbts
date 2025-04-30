@@ -5,6 +5,7 @@ import os from "os";
 import path from "path";
 import { init } from "./commands";
 import chalk from "chalk";
+import { readFile } from "fs/promises";
 
 // Load environment variables from ~/.habits.env or .env
 const homeEnvPath = path.join(os.homedir(), ".habits.env");
@@ -13,7 +14,18 @@ dotenv.config({ path: [homeEnvPath, localEnvPath] });
 
 // Get version from package.json
 const packageJsonPath = path.join(__dirname, "../package.json");
-const packageJson = await import(packageJsonPath);
+const packageJsonData = await readFile(packageJsonPath, "utf-8");
+const packageJson = JSON.parse(packageJsonData);
+
+// Check if the package.json file is valid
+if (!packageJson || typeof packageJson.version !== "string") {
+  console.error(
+    chalk.red("Error: Invalid package.json file. Version not found.")
+  );
+  process.exit(1);
+}
+
+// Extract version from package.json
 const version: string = packageJson.version;
 
 // Initialize the CLI program
