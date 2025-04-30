@@ -114,15 +114,22 @@ function startLiveTimer(habits: SelectHabit[]) {
   update(); // Initial render
   const interval = setInterval(update, 1000);
 
-  // Set up keypress listener
-  readline.emitKeypressEvents(process.stdin);
-  if (process.stdin.isTTY) process.stdin.setRawMode(true);
-
-  process.stdin.on("keypress", (_, key) => {
+  process.stdin.on("keypress", (str, key) => {
     if (key.name === "q" || (key.ctrl && key.name === "c")) {
       clearInterval(interval);
+      if (process.stdin.isTTY) process.stdin.setRawMode(false); // Reset raw mode
+      process.stdin.pause(); // Stop reading input
       console.log(chalk.gray("\nStopped live progress."));
       process.exit(0);
     }
+  });
+
+  // Handle SIGINT (Ctrl+C) explicitly
+  process.on("SIGINT", () => {
+    clearInterval(interval);
+    if (process.stdin.isTTY) process.stdin.setRawMode(false); // Reset raw mode
+    process.stdin.pause();
+    console.log(chalk.gray("\nStopped live progress."));
+    process.exit(0);
   });
 }
