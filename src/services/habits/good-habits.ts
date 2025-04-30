@@ -8,6 +8,7 @@ import {
   type SelectHabitLog,
   type InsertHabit,
 } from '@/db/zod';
+import { summary } from 'date-streaks';
 import { GamificationService } from '@/gamification';
 import { MotivationService } from '@/motivation';
 import { AppError } from '@/utils/errors';
@@ -22,7 +23,7 @@ export class GoodHabitService {
     const parsedData = insertHabitSchema.parse({
       ...data,
       type: 'good',
-      startedAt: new Date(),
+      stoppedAt: new Date(),
     });
 
     const [habit] = await db.insert(habits).values(parsedData).returning();
@@ -123,23 +124,11 @@ export class GoodHabitService {
     const projection = average * 365;
 
     // Calculate streak
-    let streak = 0;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    for (let i = logs.length - 1; i >= 0; i--) {
-      const log = logs[i];
-      if (!log) {
-        continue;
-      }
-
-      const logDate = new Date(log.loggedAt);
-      if (logDate.toDateString() === today.toDateString()) {
-        streak++;
-        today.setDate(today.getDate() - 1);
-      } else {
-        break;
-      }
-    }
+    const dates = logs
+      .map((log) => new Date(log.loggedAt).toISOString().split('T')[0])
+      .filter((date) => date !== undefined);
+    const streakSummary = summary({ dates });
+    const streak = streakSummary.currentStreak;
 
     return { average, projection, streak };
   }
