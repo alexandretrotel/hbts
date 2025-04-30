@@ -1,11 +1,11 @@
 import { desc, eq } from 'drizzle-orm';
 import { db } from '@/db';
-import { habits } from './schema';
+import { badHabits } from './schema';
 import type { InsertHabit } from './zod';
 
 export async function insertHabit(data: InsertHabit) {
   return db
-    .insert(habits)
+    .insert(badHabits)
     .values({
       name: data.name,
       stoppedAt: data.stoppedAt,
@@ -14,25 +14,25 @@ export async function insertHabit(data: InsertHabit) {
 }
 
 export async function getHabits() {
-  return db.select().from(habits).orderBy(desc(habits.createdAt));
+  return db.select().from(badHabits).orderBy(desc(badHabits.createdAt));
 }
 
 export async function renameHabit(id: string, newName: string) {
   return db
-    .update(habits)
+    .update(badHabits)
     .set({ name: newName })
-    .where(eq(habits.id, id))
+    .where(eq(badHabits.id, id))
     .returning();
 }
 
 export async function deleteHabit(id: string) {
-  return db.delete(habits).where(eq(habits.id, id)).returning();
+  return db.delete(badHabits).where(eq(badHabits.id, id)).returning();
 }
 
 export async function collapseHabit(id: string) {
   return db
-    .update(habits)
+    .update(badHabits)
     .set({ stoppedAt: new Date() })
-    .where(eq(habits.id, id))
+    .where(eq(badHabits.id, id))
     .returning();
 }
