@@ -43,7 +43,7 @@ export async function listHabitsCommand() {
       {
         type: "checkbox",
         name: "selectedHabits",
-        message: "Select habits to view progress (or press Enter to view all):",
+        message: "Select habits to view progress:",
         choices: habits.map((habit) => ({
           name: `${habit.name} (Stopped: ${formatTimeSince(habit.startedAt)})`,
           value: habit.id,
