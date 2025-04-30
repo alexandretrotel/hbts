@@ -1,11 +1,11 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
-import { getHabits } from "../db/utils";
-import { calculateProgress, formatTimeSince } from "../utils/progress";
+import { getHabits } from "@/db/utils";
+import { calculateProgress, formatTimeSince } from "@/utils/progress";
 import { table } from "table";
 import cliProgress from "cli-progress";
-import type { SelectHabit } from "../db/zod";
+import type { SelectHabit } from "@/db/zod";
 
 export async function listHabitsCommand() {
   try {
@@ -44,7 +44,7 @@ export async function listHabitsCommand() {
         name: "selectedHabits",
         message: "Select habits to view progress:",
         choices: habits.map((habit) => ({
-          name: `${habit.name} (Stopped: ${formatTimeSince(habit.startedAt)})`,
+          name: `${habit.name} (Stopped: ${formatTimeSince(habit.stoppedAt)})`,
           value: habit.id,
         })),
       },
@@ -58,10 +58,10 @@ export async function listHabitsCommand() {
     // Display table
     const tableData = [
       [chalk.bold("Habit"), chalk.bold("Stopped"), chalk.bold("Time Since")],
-      ...habitsToShow.map(({ name, startedAt }) => [
+      ...habitsToShow.map(({ name, stoppedAt }) => [
         name,
-        formatTimeSince(startedAt),
-        formatTimeSince(startedAt, true), // Live updating
+        formatTimeSince(stoppedAt),
+        formatTimeSince(stoppedAt, true), // Live updating
       ]),
     ];
 
@@ -97,7 +97,7 @@ function startLiveTimer(habits: SelectHabit[]) {
       [chalk.bold("Habit"), chalk.bold("Time Since")],
       ...habits.map((habit) => [
         habit.name,
-        formatTimeSince(habit.startedAt, true),
+        formatTimeSince(habit.stoppedAt, true),
       ]),
     ];
 

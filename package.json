@@ -13,6 +13,8 @@
     "clean": "rm -rf dist",
     "build": "bun run clean && bun build src/index.ts --outdir=dist --target=node --minify",
     "start": "bun run src/index.ts",
+    "lint": "bun run eslint .",
+    "format": "prettier --write .",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",

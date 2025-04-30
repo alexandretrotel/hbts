@@ -1,5 +1,5 @@
 import { desc, eq } from "drizzle-orm";
-import { db } from "./index";
+import { db } from "@/db";
 import { habits } from "./schema";
 import type { InsertHabit } from "./zod";
 
@@ -8,7 +8,7 @@ export async function insertHabit(data: InsertHabit) {
     .insert(habits)
     .values({
       name: data.name,
-      startedAt: data.startedAt,
+      stoppedAt: data.stoppedAt,
     })
     .returning();
 }
@@ -32,7 +32,7 @@ export async function deleteHabit(id: string) {
 export async function collapseHabit(id: string) {
   return db
     .update(habits)
-    .set({ startedAt: new Date() })
+    .set({ stoppedAt: new Date() })
     .where(eq(habits.id, id))
     .returning();
 }

@@ -1,8 +1,8 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
-import { getHabits, renameHabit } from "../db/utils";
-import { insertHabitSchema } from "../db/zod";
+import { getHabits, renameHabit } from "@/db/utils";
+import { insertHabitSchema } from "@/db/zod";
 
 export async function renameHabitCommand() {
   try {
@@ -24,7 +24,7 @@ export async function renameHabitCommand() {
         message: "Select a habit to rename:",
         choices: habits.map((habit) => ({
           name: `${habit.name} (Stopped: ${new Date(
-            habit.startedAt
+            habit.stoppedAt
           ).toLocaleString()})`,
           value: habit.id,
         })),

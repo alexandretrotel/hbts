@@ -1,9 +1,9 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import ora from "ora";
-import { insertHabit } from "../db/utils";
-import { insertHabitSchema } from "../db/zod";
-import { formatDate } from "../utils/dates";
+import { insertHabit } from "@/db/utils";
+import { insertHabitSchema } from "@/db/zod";
+import { formatDate } from "@/utils/dates";
 
 export async function addHabitCommand(habit: string) {
   try {
@@ -34,7 +34,7 @@ export async function addHabitCommand(habit: string) {
     await insertHabit(data);
 
     spinner.succeed(
-      chalk.green(`Stopped "${data.name}" on ${formatDate(data.startedAt)}`)
+      chalk.green(`Stopped "${data.name}" on ${formatDate(data.stoppedAt)}`)
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);

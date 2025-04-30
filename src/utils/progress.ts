@@ -1,5 +1,5 @@
-import { MILESTONES } from "../data";
-import type { SelectHabit } from "../db/zod";
+import { MILESTONES } from "@/data";
+import type { SelectHabit } from "@/db/zod";
 import { formatDate } from "./dates";
 
 // Interface for progress calculation

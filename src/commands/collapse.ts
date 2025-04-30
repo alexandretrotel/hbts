@@ -1,10 +1,10 @@
 import chalk from "chalk";
 import ora from "ora";
-import { collapseHabit, getHabits } from "../db/utils";
+import { collapseHabit, getHabits } from "@/db/utils";
 import inquirer from "inquirer";
-import { formatTimeSince } from "../utils/progress";
+import { formatTimeSince } from "@/utils/progress";
 
-export async function collapseHabitCommand(habitId: string) {
+export async function collapseHabitCommand() {
   try {
     const spinner = ora("Fetching habits...").start();
     const habits = await getHabits();
@@ -23,7 +23,7 @@ export async function collapseHabitCommand(habitId: string) {
         name: "selectedHabits",
         message: "Select habits to delete:",
         choices: habits.map((habit) => ({
-          name: `${habit.name} (Stopped: ${formatTimeSince(habit.startedAt)})`,
+          name: `${habit.name} (Stopped: ${formatTimeSince(habit.stoppedAt)})`,
           value: { id: habit.id, name: habit.name },
         })),
       },

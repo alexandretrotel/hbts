@@ -3,7 +3,7 @@ import { Command } from "commander";
 import dotenv from "dotenv";
 import os from "os";
 import path from "path";
-import { init } from "./commands";
+import { init } from "@/commands";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 

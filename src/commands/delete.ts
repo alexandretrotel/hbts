@@ -1,9 +1,9 @@
 import ora from "ora";
-import { getHabits } from "../db/utils";
+import { getHabits } from "@/db/utils";
 import chalk from "chalk";
 import inquirer from "inquirer";
-import { formatTimeSince } from "../utils/progress";
-import { deleteHabit } from "../db/utils";
+import { formatTimeSince } from "@/utils/progress";
+import { deleteHabit } from "@/db/utils";
 
 export async function deleteHabitCommand() {
   try {
@@ -24,7 +24,7 @@ export async function deleteHabitCommand() {
         name: "selectedHabits",
         message: "Select habits to delete:",
         choices: habits.map((habit) => ({
-          name: `${habit.name} (Stopped: ${formatTimeSince(habit.startedAt)})`,
+          name: `${habit.name} (Stopped: ${formatTimeSince(habit.stoppedAt)})`,
           value: { id: habit.id, name: habit.name },
         })),
       },
