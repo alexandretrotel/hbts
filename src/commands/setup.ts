@@ -19,6 +19,7 @@ export async function setupCommand() {
           if (!input.trim()) {
             return "DATABASE_URL cannot be empty.";
           }
+
           // Basic validation for PostgreSQL URL format
           if (
             !input.startsWith("postgres://") &&
@@ -26,6 +27,7 @@ export async function setupCommand() {
           ) {
             return "DATABASE_URL must start with 'postgres://' or 'postgresql://'.";
           }
+
           return true;
         },
       },
