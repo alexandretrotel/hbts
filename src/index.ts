@@ -16,10 +16,10 @@ const program = new Command();
 program
   .name("hbts")
   .description("Track bad habits with progress tracking")
-  .version("1.0.2");
+  .version("1.0.3");
 
 // Register commands
-init(program);
+await init(program);
 
 // Parse arguments
 const args = program.parse(process.argv);
