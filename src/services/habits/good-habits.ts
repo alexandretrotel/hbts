@@ -95,7 +95,9 @@ export class GoodHabitService {
       multiple_daily: 1.5,
     };
     return (
-      10 * difficultyMultipliers[difficulty] * frequencyMultipliers[frequency]
+      10 *
+      (difficultyMultipliers[difficulty] || 1) *
+      (frequencyMultipliers[frequency] || 1)
     );
   }
 
@@ -119,9 +121,14 @@ export class GoodHabitService {
     // Calculate streak
     let streak = 0;
     const today = new Date();
-    todayinternals;
+    today.setHours(0, 0, 0, 0);
     for (let i = logs.length - 1; i >= 0; i--) {
-      const logDate = new Date(logs[i].loggedAt);
+      const log = logs[i];
+      if (!log) {
+        continue;
+      }
+
+      const logDate = new Date(log.loggedAt);
       if (logDate.toDateString() === today.toDateString()) {
         streak++;
         today.setDate(today.getDate() - 1);
