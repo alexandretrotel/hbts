@@ -1,7 +1,5 @@
 import { Command } from "commander";
 import { setupCommand } from "./setup";
-import { deleteHabitCommand } from "./delete";
-import { collapseHabitCommand } from "./collapse";
 
 export async function init(program: Command) {
   program
@@ -13,6 +11,8 @@ export async function init(program: Command) {
     const { renameHabitCommand } = await import("./rename");
     const { addHabitCommand } = await import("./add");
     const { listHabitsCommand } = await import("./list");
+    const { deleteHabitCommand } = await import("./delete");
+    const { collapseHabitCommand } = await import("./collapse");
 
     program
       .command("add")
