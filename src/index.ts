@@ -6,18 +6,17 @@ import path from 'path';
 import { init } from '@/commands';
 import chalk from 'chalk';
 import { readFile } from 'fs/promises';
+import { habitRepository } from '@/db';
+import { HabitService } from '@/services/habits.service';
 
-// Load environment variables from ~/.habits.env or .env
 const homeEnvPath = path.join(os.homedir(), '.habits.env');
 const localEnvPath = path.join(__dirname, '../.env');
 dotenv.config({ path: [homeEnvPath, localEnvPath] });
 
-// Get version from package.json
 const packageJsonPath = path.join(__dirname, '../package.json');
 const packageJsonData = await readFile(packageJsonPath, 'utf-8');
 const packageJson = JSON.parse(packageJsonData);
 
-// Check if the package.json file is valid
 if (!packageJson || typeof packageJson.version !== 'string') {
   console.error(
     chalk.red('Error: Invalid package.json file. Version not found.')
@@ -25,23 +24,19 @@ if (!packageJson || typeof packageJson.version !== 'string') {
   process.exit(1);
 }
 
-// Extract version from package.json
 const version: string = packageJson.version;
+const habitService = new HabitService(habitRepository);
 
-// Initialize the CLI program
 const program = new Command();
 program
   .name('hbts')
   .description('Track bad habits with progress tracking')
   .version(version);
 
-// Register commands
-await init(program);
+await init(program, habitService);
 
-// Parse arguments
 const args = program.parse(process.argv);
 
-// Validate DATABASE_URL only if not running the setup command
 if (args.args[0] !== 'setup' && !process.env.DATABASE_URL) {
   console.error(
     chalk.red(

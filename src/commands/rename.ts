@@ -1,13 +1,13 @@
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import ora from 'ora';
-import { getHabits, renameHabit } from '@/db/utils';
+import { HabitService } from '@/services/habits.service';
 import { insertHabitSchema } from '@/db/zod';
 
-export async function renameHabitCommand() {
+export async function renameHabitCommand(habitService: HabitService) {
   try {
     const spinner = ora('Fetching habits...').start();
-    const habits = await getHabits();
+    const habits = await habitService.getHabits();
 
     if (habits.length === 0) {
       spinner.warn(chalk.yellow('No habits recorded yet.'));
@@ -16,29 +16,24 @@ export async function renameHabitCommand() {
 
     spinner.succeed(chalk.green('Habits retrieved successfully.'));
 
-    // Prompt user to select a habit to rename
     const { habitId } = await inquirer.prompt([
       {
         type: 'list',
         name: 'habitId',
         message: 'Select a habit to rename:',
         choices: habits.map((habit) => ({
-          name: `${habit.name} (Stopped: ${new Date(
-            habit.stoppedAt
-          ).toLocaleString()})`,
+          name: `${habit.name} (Stopped: ${new Date(habit.stoppedAt).toLocaleString()})`,
           value: habit.id,
         })),
       },
     ]);
 
-    // Find the selected habit
     const selectedHabit = habits.find((habit) => habit.id === habitId);
     if (!selectedHabit) {
       console.error(chalk.red('Error: Selected habit not found.'));
       return;
     }
 
-    // Prompt for the new name
     const { newName } = await inquirer.prompt([
       {
         type: 'input',
@@ -49,7 +44,7 @@ export async function renameHabitCommand() {
             return 'Habit name cannot be empty.';
           }
           try {
-            insertHabitSchema.parse({ name: input, startedAt: new Date() });
+            insertHabitSchema.parse({ name: input, stoppedAt: new Date() });
             return true;
           } catch {
             return 'Invalid habit name format.';
@@ -58,7 +53,6 @@ export async function renameHabitCommand() {
       },
     ]);
 
-    // Confirm the rename action
     const { confirm } = await inquirer.prompt([
       {
         type: 'confirm',
@@ -75,10 +69,8 @@ export async function renameHabitCommand() {
       return;
     }
 
-    // Perform the rename
     const renameSpinner = ora('Renaming habit...').start();
-    await renameHabit(habitId, newName);
-
+    await habitService.renameHabit(habitId, newName);
     renameSpinner.succeed(
       chalk.green(`Habit renamed to "${newName}" successfully.`)
     );

@@ -1,14 +1,13 @@
 import ora from 'ora';
-import { getHabits } from '@/db/utils';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import { formatTimeSince } from '@/utils/progress';
-import { deleteHabit } from '@/db/utils';
+import { HabitService } from '@/services/habits.service';
 
-export async function deleteHabitCommand() {
+export async function deleteHabitCommand(habitService: HabitService) {
   try {
     const spinner = ora('Fetching habits...').start();
-    const habits = await getHabits();
+    const habits = await habitService.getHabits();
 
     if (habits.length === 0) {
       spinner.warn(chalk.yellow('No habits recorded yet.'));
@@ -32,7 +31,7 @@ export async function deleteHabitCommand() {
 
     // Delete selected habits
     for (const habit of selectedHabits) {
-      await deleteHabit(habit.id);
+      await habitService.deleteHabit(habit.id);
       console.log(chalk.green(`Deleted habit: ${habit.name}`));
     }
   } catch (error) {

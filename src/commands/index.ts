@@ -1,7 +1,8 @@
 import { Command } from 'commander';
 import { setupCommand } from './setup';
+import { HabitService } from '@/services/habits.service';
 
-export async function init(program: Command) {
+export async function init(program: Command, habitService: HabitService) {
   program
     .command('setup')
     .description('Set up the habits CLI for the first time')
@@ -21,26 +22,26 @@ export async function init(program: Command) {
         '<habit>',
         'Name of the habit (e.g., "watching porn", "smoking", etc...)'
       )
-      .action(addHabitCommand);
+      .action((habit: string) => addHabitCommand(habit, habitService));
 
     program
       .command('list')
       .description('List all recorded habits with progress')
-      .action(listHabitsCommand);
+      .action(() => listHabitsCommand(habitService));
 
     program
       .command('rename')
       .description('Rename an existing habit')
-      .action(renameHabitCommand);
+      .action(() => renameHabitCommand(habitService));
 
     program
       .command('delete')
       .description('Delete an existing habit')
-      .action(deleteHabitCommand);
+      .action(() => deleteHabitCommand(habitService));
 
     program
       .command('collapse')
       .description('Collapse an existing habit (i.e. remove all progress)')
-      .action(collapseHabitCommand);
+      .action(() => collapseHabitCommand(habitService));
   }
 }

@@ -1,13 +1,15 @@
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import ora from 'ora';
-import { insertHabit } from '@/db/utils';
+import { HabitService } from '@/services/habits.service';
 import { insertHabitSchema } from '@/db/zod';
 import { formatDate } from '@/utils/dates';
 
-export async function addHabitCommand(habit: string) {
+export async function addHabitCommand(
+  habit: string,
+  habitService: HabitService
+) {
   try {
-    // Prompt for confirmation using inquirer
     const { confirm } = await inquirer.prompt([
       {
         type: 'confirm',
@@ -23,16 +25,12 @@ export async function addHabitCommand(habit: string) {
     }
 
     const spinner = ora('Recording habit...').start();
-
-    // Validate and parse habit data
     const data = insertHabitSchema.parse({
       name: habit,
-      startedAt: new Date(),
+      stoppedAt: new Date(),
     });
 
-    // Insert habit into database
-    await insertHabit(data);
-
+    await habitService.addHabit(data);
     spinner.succeed(
       chalk.green(`Stopped "${data.name}" on ${formatDate(data.stoppedAt)}`)
     );
