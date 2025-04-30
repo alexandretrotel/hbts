@@ -1,17 +1,11 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import dotenv from 'dotenv';
-import os from 'os';
 import path from 'path';
 import { init } from '@/commands';
 import chalk from 'chalk';
 import { readFile } from 'fs/promises';
 import { habitRepository } from '@/db';
 import { HabitService } from '@/services/habits.service';
-
-const homeEnvPath = path.join(os.homedir(), '.habits.env');
-const localEnvPath = path.join(__dirname, '../.env');
-dotenv.config({ path: [homeEnvPath, localEnvPath] });
 
 const packageJsonPath = path.join(__dirname, '../package.json');
 const packageJsonData = await readFile(packageJsonPath, 'utf-8');
@@ -34,14 +28,3 @@ program
   .version(version);
 
 await init(program, habitService);
-
-const args = program.parse(process.argv);
-
-if (args.args[0] !== 'setup' && !process.env.DATABASE_URL) {
-  console.error(
-    chalk.red(
-      "Error: DATABASE_URL is not defined in ~/.habits.env or .env. Run 'habits setup' to configure it."
-    )
-  );
-  process.exit(1);
-}
