@@ -8,11 +8,11 @@ import chalk from "chalk";
 
 // Load environment variables from ~/.habits.env or .env
 const homeEnvPath = path.join(os.homedir(), ".habits.env");
-const localEnvPath = path.join(__dirname, "../../.env");
+const localEnvPath = path.join(__dirname, "../.env");
 dotenv.config({ path: [homeEnvPath, localEnvPath] });
 
 // Get version from package.json
-const packageJsonPath = path.join(__dirname, "../../package.json");
+const packageJsonPath = path.join(__dirname, "../package.json");
 const packageJson = await import(packageJsonPath);
 const version: string = packageJson.version;
 
