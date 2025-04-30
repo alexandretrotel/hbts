@@ -1,6 +1,6 @@
 {
   "name": "hbts",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Track bad habits with progress tracking",
   "author": "Alexandre Trotel",
   "license": "MIT",
@@ -41,6 +41,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@inquirer/prompts": "^7.5.0",
     "@neondatabase/serverless": "^1.0.0",
     "chalk": "^5.4.1",
     "cli-progress": "^3.12.0",
@@ -49,7 +50,6 @@
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
     "drizzle-zod": "^0.7.1",
-    "inquirer": "^12.6.0",
     "ora": "^8.2.0",
     "readline": "^1.3.0",
     "table": "^6.9.0",

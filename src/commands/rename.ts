@@ -1,4 +1,4 @@
-import inquirer from 'inquirer';
+import { select, input, confirm } from '@inquirer/prompts';
 import chalk from 'chalk';
 import ora from 'ora';
 import { HabitService } from '@/services/habits.service';
@@ -16,17 +16,13 @@ export async function renameHabitCommand(habitService: HabitService) {
 
     spinner.succeed(chalk.green('Habits retrieved successfully.'));
 
-    const { habitId } = await inquirer.prompt([
-      {
-        type: 'list',
-        name: 'habitId',
-        message: 'Select a habit to rename:',
-        choices: habits.map((habit) => ({
-          name: `${habit.name} (Stopped: ${new Date(habit.stoppedAt).toLocaleString()})`,
-          value: habit.id,
-        })),
-      },
-    ]);
+    const habitId = await select({
+      message: 'Select a habit to rename:',
+      choices: habits.map((habit) => ({
+        name: `${habit.name} (Stopped: ${new Date(habit.stoppedAt).toLocaleString()})`,
+        value: habit.id,
+      })),
+    });
 
     const selectedHabit = habits.find((habit) => habit.id === habitId);
     if (!selectedHabit) {
@@ -34,37 +30,29 @@ export async function renameHabitCommand(habitService: HabitService) {
       return;
     }
 
-    const { newName } = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'newName',
-        message: `Enter new name for "${selectedHabit.name}":`,
-        validate: (input: string) => {
-          if (!input.trim()) {
-            return 'Habit name cannot be empty.';
-          }
-          try {
-            insertHabitSchema.parse({ name: input, stoppedAt: new Date() });
-            return true;
-          } catch {
-            return 'Invalid habit name format.';
-          }
-        },
+    const newName = await input({
+      message: `Enter new name for "${selectedHabit.name}":`,
+      validate: (input: string) => {
+        if (!input.trim()) {
+          return 'Habit name cannot be empty.';
+        }
+        try {
+          insertHabitSchema.parse({ name: input, stoppedAt: new Date() });
+          return true;
+        } catch {
+          return 'Invalid habit name format.';
+        }
       },
-    ]);
+    });
 
-    const { confirm } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'confirm',
-        message: chalk.yellow(
-          `Confirm renaming "${selectedHabit.name}" to "${newName}"?`
-        ),
-        default: false,
-      },
-    ]);
+    const confirmed = await confirm({
+      message: chalk.yellow(
+        `Confirm renaming "${selectedHabit.name}" to "${newName}"?`
+      ),
+      default: false,
+    });
 
-    if (!confirm) {
+    if (!confirmed) {
       console.log(chalk.gray('Action canceled.'));
       return;
     }

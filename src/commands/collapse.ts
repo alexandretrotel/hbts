@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import ora from 'ora';
 import { HabitService } from '@/services/habits.service';
-import inquirer from 'inquirer';
+import { checkbox } from '@inquirer/prompts';
 import { formatTimeSince } from '@/utils/progress';
 
 export async function collapseHabitCommand(habitService: HabitService) {
@@ -17,17 +17,13 @@ export async function collapseHabitCommand(habitService: HabitService) {
     spinner.succeed(chalk.green('Habits retrieved successfully.'));
 
     // Prompt user to select habits to collapse
-    const { selectedHabits } = await inquirer.prompt([
-      {
-        type: 'checkbox',
-        name: 'selectedHabits',
-        message: 'Select habits to collapse:',
-        choices: habits.map((habit) => ({
-          name: `${habit.name} (Stopped: ${formatTimeSince(habit.stoppedAt)})`,
-          value: { id: habit.id, name: habit.name },
-        })),
-      },
-    ]);
+    const selectedHabits = await checkbox({
+      message: 'Select habits to collapse:',
+      choices: habits.map((habit) => ({
+        name: `${habit.name} (Stopped: ${formatTimeSince(habit.stoppedAt)})`,
+        value: { id: habit.id, name: habit.name },
+      })),
+    });
 
     // Collapse selected habits
     for (const habit of selectedHabits) {

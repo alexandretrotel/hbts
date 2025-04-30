@@ -1,4 +1,4 @@
-import inquirer from 'inquirer';
+import { confirm } from '@inquirer/prompts';
 import chalk from 'chalk';
 import ora from 'ora';
 import { HabitService } from '@/services/habits.service';
@@ -10,16 +10,12 @@ export async function addHabitCommand(
   habitService: HabitService
 ) {
   try {
-    const { confirm } = await inquirer.prompt([
-      {
-        type: 'confirm',
-        name: 'confirm',
-        message: chalk.yellow(`Confirm adding "${habit}"?`),
-        default: false,
-      },
-    ]);
+    const confirmed = await confirm({
+      message: chalk.yellow(`Confirm adding "${habit}"?`),
+      default: false,
+    });
 
-    if (!confirm) {
+    if (!confirmed) {
       console.log(chalk.gray('Action canceled.'));
       return;
     }

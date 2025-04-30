@@ -1,4 +1,4 @@
-import inquirer from 'inquirer';
+import { input } from '@inquirer/prompts';
 import chalk from 'chalk';
 import ora from 'ora';
 import fs from 'fs/promises';
@@ -8,28 +8,24 @@ import os from 'os';
 export async function setupCommand() {
   try {
     // Prompt for DATABASE_URL
-    const { databaseUrl } = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'databaseUrl',
-        message: 'Enter your PostgreSQL DATABASE_URL:',
-        validate: (input: string) => {
-          if (!input.trim()) {
-            return 'DATABASE_URL cannot be empty.';
-          }
+    const databaseUrl = await input({
+      message: 'Enter your PostgreSQL DATABASE_URL:',
+      validate: (input: string) => {
+        if (!input.trim()) {
+          return 'DATABASE_URL cannot be empty.';
+        }
 
-          // Basic validation for PostgreSQL URL format
-          if (
-            !input.startsWith('postgres://') &&
-            !input.startsWith('postgresql://')
-          ) {
-            return "DATABASE_URL must start with 'postgres://' or 'postgresql://'.";
-          }
+        // Basic validation for PostgreSQL URL format
+        if (
+          !input.startsWith('postgres://') &&
+          !input.startsWith('postgresql://')
+        ) {
+          return "DATABASE_URL must start with 'postgres://' or 'postgresql://'.";
+        }
 
-          return true;
-        },
+        return true;
       },
-    ]);
+    });
 
     // Define the path for ~/.habits.env
     const spinner = ora('Setting up habits CLI...').start();

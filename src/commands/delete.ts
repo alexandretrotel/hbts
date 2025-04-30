@@ -1,6 +1,6 @@
 import ora from 'ora';
 import chalk from 'chalk';
-import inquirer from 'inquirer';
+import { checkbox } from '@inquirer/prompts';
 import { formatTimeSince } from '@/utils/progress';
 import { HabitService } from '@/services/habits.service';
 
@@ -17,17 +17,13 @@ export async function deleteHabitCommand(habitService: HabitService) {
     spinner.succeed(chalk.green('Habits retrieved successfully.'));
 
     // Prompt user to select habits to delete
-    const { selectedHabits } = await inquirer.prompt([
-      {
-        type: 'checkbox',
-        name: 'selectedHabits',
-        message: 'Select habits to delete:',
-        choices: habits.map((habit) => ({
-          name: `${habit.name} (Stopped: ${formatTimeSince(habit.stoppedAt)})`,
-          value: { id: habit.id, name: habit.name },
-        })),
-      },
-    ]);
+    const selectedHabits = await checkbox({
+      message: 'Select habits to delete:',
+      choices: habits.map((habit) => ({
+        name: `${habit.name} (Stopped: ${formatTimeSince(habit.stoppedAt)})`,
+        value: { id: habit.id, name: habit.name },
+      })),
+    });
 
     // Delete selected habits
     for (const habit of selectedHabits) {

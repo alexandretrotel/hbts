@@ -1,4 +1,4 @@
-import inquirer from 'inquirer';
+import { checkbox } from '@inquirer/prompts';
 import chalk from 'chalk';
 import ora from 'ora';
 import { HabitService } from '@/services/habits.service';
@@ -24,17 +24,13 @@ export async function listHabitsCommand(habitService: HabitService) {
     const progress = await habitService.getProgress(habits);
     renderProgressBar(progress.percentage, progress.level);
 
-    const { selectedHabits } = await inquirer.prompt([
-      {
-        type: 'checkbox',
-        name: 'selectedHabits',
-        message: 'Select habits to view progress:',
-        choices: habits.map((habit) => ({
-          name: `${habit.name} (Stopped: ${formatTimeSince(habit.stoppedAt)})`,
-          value: habit.id,
-        })),
-      },
-    ]);
+    const selectedHabits = await checkbox({
+      message: 'Select habits to view progress:',
+      choices: habits.map((habit) => ({
+        name: `${habit.name} (Stopped: ${formatTimeSince(habit.stoppedAt)})`,
+        value: habit.id,
+      })),
+    });
 
     const habitsToShow =
       selectedHabits.length > 0
