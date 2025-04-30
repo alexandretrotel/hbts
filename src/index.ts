@@ -11,12 +11,17 @@ const homeEnvPath = path.join(os.homedir(), ".habits.env");
 const localEnvPath = path.join(__dirname, "../../.env");
 dotenv.config({ path: [homeEnvPath, localEnvPath] });
 
+// Get version from package.json
+const packageJsonPath = path.join(__dirname, "../../package.json");
+const packageJson = await import(packageJsonPath);
+const version: string = packageJson.version;
+
 // Initialize the CLI program
 const program = new Command();
 program
   .name("hbts")
   .description("Track bad habits with progress tracking")
-  .version("1.0.3");
+  .version(version);
 
 // Register commands
 await init(program);
