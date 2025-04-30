@@ -9,8 +9,7 @@ import os from 'os';
 import path from 'path';
 
 const homeEnvPath = path.join(os.homedir(), '.habits.env');
-const localEnvPath = path.join(__dirname, '../.env');
-dotenv.config({ path: [homeEnvPath, localEnvPath] });
+dotenv.config({ path: [homeEnvPath] });
 
 if (!process.env.DATABASE_URL) {
   await setupCommand();

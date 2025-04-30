@@ -28,3 +28,5 @@ program
   .version(version);
 
 await init(program, habitService);
+
+program.parse(process.argv);
