@@ -16,7 +16,7 @@ const program = new Command();
 program
   .name("hbts")
   .description("Track bad habits with progress tracking")
-  .version("1.0.0");
+  .version("1.0.2");
 
 // Register commands
 init(program);
