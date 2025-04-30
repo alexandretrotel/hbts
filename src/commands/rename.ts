@@ -51,7 +51,7 @@ export async function renameHabitCommand() {
           try {
             insertHabitSchema.parse({ name: input, startedAt: new Date() });
             return true;
-          } catch (error) {
+          } catch {
             return 'Invalid habit name format.';
           }
         },
