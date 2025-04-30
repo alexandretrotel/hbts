@@ -21,7 +21,7 @@ export async function collapseHabitCommand(habitService: HabitService) {
       {
         type: 'checkbox',
         name: 'selectedHabits',
-        message: 'Select habits to delete:',
+        message: 'Select habits to collapse:',
         choices: habits.map((habit) => ({
           name: `${habit.name} (Stopped: ${formatTimeSince(habit.stoppedAt)})`,
           value: { id: habit.id, name: habit.name },
@@ -32,7 +32,7 @@ export async function collapseHabitCommand(habitService: HabitService) {
     // Collapse selected habits
     for (const habit of selectedHabits) {
       await habitService.collapseHabit(habit.id);
-      console.log(chalk.green(`Deleted habit: ${habit.name}`));
+      console.log(chalk.green(`Collapsed habit: ${habit.name}`));
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
