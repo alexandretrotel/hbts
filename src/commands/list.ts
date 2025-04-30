@@ -92,7 +92,7 @@ function startLiveTimer(habits: SelectHabit[]) {
 
   const update = () => {
     console.clear();
-    console.log(chalk.gray("Press 'q' to quit the timer.\n"));
+    console.log(chalk.gray("Press 'Ctrl+C' to stop live progress."));
 
     const tableData = [
       [chalk.bold("Habit"), chalk.bold("Time Since")],
@@ -113,16 +113,6 @@ function startLiveTimer(habits: SelectHabit[]) {
 
   update(); // Initial render
   const interval = setInterval(update, 1000);
-
-  process.stdin.on("keypress", (str, key) => {
-    if (key.name === "q" || (key.ctrl && key.name === "c")) {
-      clearInterval(interval);
-      if (process.stdin.isTTY) process.stdin.setRawMode(false); // Reset raw mode
-      process.stdin.pause(); // Stop reading input
-      console.log(chalk.gray("\nStopped live progress."));
-      process.exit(0);
-    }
-  });
 
   // Handle SIGINT (Ctrl+C) explicitly
   process.on("SIGINT", () => {
