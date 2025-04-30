@@ -40,7 +40,7 @@ export async function init(program: Command) {
 
     program
       .command("collapse")
-      .description("Collapse a habit")
+      .description("Collapse an existing habit (i.e. remove all progress)")
       .action(collapseHabitCommand);
   }
 }
