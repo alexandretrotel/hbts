@@ -75,6 +75,7 @@ export class GoodHabitService {
     }
 
     const stats = this.calculateStats(habit[0], logs);
+
     return {
       habit: habit[0],
       stats,
@@ -88,12 +89,14 @@ export class GoodHabitService {
       medium: 2,
       hard: 3,
     };
+
     const frequencyMultipliers: Record<string, number> = {
       daily: 1,
       weekly: 0.5,
       monthly: 0.2,
       multiple_daily: 1.5,
     };
+
     return (
       10 *
       (difficultyMultipliers[difficulty] || 1) *
@@ -110,6 +113,7 @@ export class GoodHabitService {
       (sum, log) => sum + (log.value || (log.completed ? 1 : 0)),
       0
     );
+
     const days = Math.ceil(
       (new Date().getTime() - habit.createdAt.getTime()) / (1000 * 3600 * 24)
     );
