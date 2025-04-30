@@ -14,7 +14,6 @@ dotenv.config({ path: [homeEnvPath, localEnvPath] });
 
 if (!process.env.DATABASE_URL) {
   await setupCommand();
-  console.log('Please restart the application after setting up the database.');
   process.exit(0);
 }
 
