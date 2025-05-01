@@ -1,12 +1,12 @@
 {
   "name": "hbts",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "Track bad habits with progress tracking",
   "author": "Alexandre Trotel",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "habits": "./dist/index.js"
+    "hbts": "./dist/index.js"
   },
   "scripts": {
     "dev": "bun run src/index.ts",
