@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import ora from 'ora';
 import { HabitService } from '@/services/habits.service';
-import { checkbox } from '@inquirer/prompts';
+import { checkbox, confirm } from '@inquirer/prompts';
 import { formatTimeSince } from '@/utils/progress';
 
 export async function collapseHabitCommand(habitService: HabitService) {
@@ -24,6 +24,19 @@ export async function collapseHabitCommand(habitService: HabitService) {
         value: { id: habit.id, name: habit.name },
       })),
     });
+
+    // Prompt user to confirm the action
+    const confirmed = await confirm({
+      message: chalk.yellow(
+        `Are you sure you want to collapse ${selectedHabits.length} habit(s)?`
+      ),
+      default: false,
+    });
+
+    if (!confirmed) {
+      console.log(chalk.yellow('Action cancelled by user.'));
+      return;
+    }
 
     // Collapse selected habits
     for (const habit of selectedHabits) {

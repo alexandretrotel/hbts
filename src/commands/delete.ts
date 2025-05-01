@@ -1,6 +1,6 @@
 import ora from 'ora';
 import chalk from 'chalk';
-import { checkbox } from '@inquirer/prompts';
+import { checkbox, confirm } from '@inquirer/prompts';
 import { formatTimeSince } from '@/utils/progress';
 import { HabitService } from '@/services/habits.service';
 
@@ -24,6 +24,19 @@ export async function deleteHabitCommand(habitService: HabitService) {
         value: { id: habit.id, name: habit.name },
       })),
     });
+
+    // Prompt user to confirm the action
+    const confirmed = await confirm({
+      message: chalk.yellow(
+        `Are you sure you want to delete ${selectedHabits.length} habit(s)?`
+      ),
+      default: false,
+    });
+
+    if (!confirmed) {
+      console.log(chalk.yellow('Action cancelled by user.'));
+      return;
+    }
 
     // Delete selected habits
     for (const habit of selectedHabits) {

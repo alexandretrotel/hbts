@@ -53,7 +53,7 @@ export async function renameHabitCommand(habitService: HabitService) {
     });
 
     if (!confirmed) {
-      console.log(chalk.gray('Action canceled.'));
+      console.log(chalk.gray('Action canceled by user.'));
       return;
     }
 
