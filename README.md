@@ -9,7 +9,7 @@ bun install
 To run:
 
 ```bash
-bun run src/index.ts
+bun run apps/cli/src/index.ts
 ```
 
 But you should rather install it globally and setup your own Neon database:
