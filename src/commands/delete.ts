@@ -20,7 +20,7 @@ export async function deleteHabitCommand(habitService: HabitService) {
       message: 'Select habits to delete:',
       choices: habits.map((habit) => ({
         name: `${habit.name} (${habit.type})`,
-        value: { id: habit.id, name: habit.name },
+        value: { id: habit.id, name: habit.name, type: habit.type },
       })),
     });
 
@@ -39,7 +39,7 @@ export async function deleteHabitCommand(habitService: HabitService) {
 
     // Delete selected habits
     for (const habit of selectedHabits) {
-      await habitService.deleteHabit(habit.id);
+      await habitService.deleteHabit(habit.id, habit.type);
       console.log(chalk.green(`Deleted habit: ${habit.name}`));
     }
   } catch (error) {

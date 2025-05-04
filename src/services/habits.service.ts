@@ -5,6 +5,7 @@ import {
   type MilestoneStrategy,
 } from '@/utils/milestones';
 import type {
+  HabitType,
   InsertBadHabit,
   InsertGoodHabit,
   InsertGoodHabitLog,
@@ -37,12 +38,16 @@ export class HabitService {
     return this.repository.getBadHabits();
   }
 
-  async renameHabit(id: string, newName: string): Promise<SelectHabit[]> {
-    return this.repository.renameHabit(id, newName);
+  async renameHabit(
+    id: string,
+    newName: string,
+    type: HabitType
+  ): Promise<SelectHabit[]> {
+    return this.repository.renameHabit(id, newName, type);
   }
 
-  async deleteHabit(id: string): Promise<SelectHabit[]> {
-    return this.repository.deleteHabit(id);
+  async deleteHabit(id: string, type: HabitType): Promise<SelectHabit[]> {
+    return this.repository.deleteHabit(id, type);
   }
 
   async collapseBadHabit(id: string): Promise<SelectBadHabit[]> {

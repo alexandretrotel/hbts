@@ -3,6 +3,7 @@ import { db } from '@/db';
 import { badHabits, goodHabits, goodHabitsLog } from '@/db/schema';
 import type { HabitRepository } from '@/db/repositories';
 import type {
+  HabitType,
   InsertBadHabit,
   InsertGoodHabit,
   InsertGoodHabitLog,
@@ -36,7 +37,10 @@ export class DatabaseHabitRepository implements HabitRepository {
   }
 
   async getHabits(): Promise<SelectHabit[]> {
-    return db.select().from(badHabits).orderBy(desc(badHabits.createdAt));
+    const badHabits = await this.getBadHabits();
+    const goodHabits = await this.getGoodHabits();
+    const allHabits = [...badHabits, ...goodHabits];
+    return allHabits;
   }
 
   async getGoodHabits(): Promise<SelectGoodHabit[]> {
@@ -55,8 +59,12 @@ export class DatabaseHabitRepository implements HabitRepository {
       .returning();
   }
 
-  async deleteHabit(id: string): Promise<SelectHabit[]> {
-    return db.delete(badHabits).where(eq(badHabits.id, id)).returning();
+  async deleteHabit(id: string, type: HabitType): Promise<SelectHabit[]> {
+    if (type === 'good') {
+      return db.delete(goodHabits).where(eq(goodHabits.id, id)).returning();
+    } else {
+      return db.delete(badHabits).where(eq(badHabits.id, id)).returning();
+    }
   }
 
   async collapseBadHabit(id: string): Promise<SelectBadHabit[]> {

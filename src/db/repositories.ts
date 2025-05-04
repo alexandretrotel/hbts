@@ -6,6 +6,7 @@ import type {
   SelectHabit,
   InsertGoodHabitLog,
   SelectGoodHabitLog,
+  HabitType,
 } from '@/db/zod';
 
 export interface HabitRepository {
@@ -14,8 +15,12 @@ export interface HabitRepository {
   getHabits(): Promise<SelectHabit[]>;
   getGoodHabits(): Promise<SelectGoodHabit[]>;
   getBadHabits(): Promise<SelectBadHabit[]>;
-  renameHabit(id: string, newName: string): Promise<SelectHabit[]>;
-  deleteHabit(id: string): Promise<SelectHabit[]>;
+  renameHabit(
+    id: string,
+    newName: string,
+    type: HabitType
+  ): Promise<SelectHabit[]>;
+  deleteHabit(id: string, type: HabitType): Promise<SelectHabit[]>;
   collapseBadHabit(id: string): Promise<SelectBadHabit[]>;
   logGoodHabit(data: InsertGoodHabitLog): Promise<SelectGoodHabitLog[]>;
 }
