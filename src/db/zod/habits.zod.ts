@@ -15,6 +15,15 @@ export type InsertGoodHabit = z.infer<typeof insertGoodHabitSchema>;
 export const frequencyEnumSchema = createSelectSchema(schema.frequencyEnum);
 export type FrequencyEnum = z.infer<typeof frequencyEnumSchema>;
 
+export const selectGoodHabitsLogSchema = createSelectSchema(
+  schema.goodHabitsLog
+);
+export const insertGoodHabitLogSchema = createInsertSchema(
+  schema.goodHabitsLog
+);
+export type SelectGoodHabitLog = z.infer<typeof selectGoodHabitsLogSchema>;
+export type InsertGoodHabitLog = z.infer<typeof insertGoodHabitLogSchema>;
+
 export type SelectHabit = SelectBadHabit | SelectGoodHabit;
 export type InsertHabit = InsertBadHabit | InsertGoodHabit;
 

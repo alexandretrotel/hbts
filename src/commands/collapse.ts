@@ -7,7 +7,7 @@ import { formatTimeSince } from '@/utils/progress';
 export async function collapseHabitCommand(habitService: HabitService) {
   try {
     const spinner = ora('Fetching habits...').start();
-    const habits = await habitService.getHabits();
+    const habits = await habitService.getBadHabits();
 
     if (habits.length === 0) {
       spinner.warn(chalk.yellow('No habits recorded yet.'));
@@ -40,7 +40,7 @@ export async function collapseHabitCommand(habitService: HabitService) {
 
     // Collapse selected habits
     for (const habit of selectedHabits) {
-      await habitService.collapseHabit(habit.id);
+      await habitService.collapseBadHabit(habit.id);
       console.log(chalk.green(`Collapsed habit: ${habit.name}`));
     }
   } catch (error) {

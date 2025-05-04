@@ -1,4 +1,5 @@
 import {
+  boolean,
   pgTable,
   real,
   text,
@@ -6,19 +7,22 @@ import {
   unique,
   uuid,
 } from 'drizzle-orm/pg-core';
-import { frequencyEnum } from './enums.schema';
+import { frequencyEnum, habitTypeEnum } from './enums.schema';
 
 export const badHabits = pgTable('bad_habits', {
   id: uuid('id').primaryKey().defaultRandom(),
-  name: text('name').notNull(),
+  name: text('name').notNull().unique(),
+  type: habitTypeEnum('type').notNull().default('bad'),
   stoppedAt: timestamp('stopped_at').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
 export const goodHabits = pgTable('good_habits', {
   id: uuid('id').primaryKey().defaultRandom(),
-  name: text('name').notNull(),
+  name: text('name').notNull().unique(),
+  type: habitTypeEnum('type').notNull().default('good'),
   frequency: frequencyEnum('frequency').notNull(),
+  quantity: boolean('quantity').default(false).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
@@ -34,6 +38,7 @@ export const goodHabitsLog = pgTable(
       }),
     date: timestamp('date').notNull(),
     quantity: real('quantity'),
+    checked: boolean('checked').default(false).notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),
   },
   (t) => [unique().on(t.goodHabitId, t.date)]

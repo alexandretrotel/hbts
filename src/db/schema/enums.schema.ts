@@ -7,3 +7,5 @@ export const frequencyEnum = pgEnum('frequency', [
   'monthly',
   'yearly',
 ]);
+
+export const habitTypeEnum = pgEnum('habit_type', ['bad', 'good']);

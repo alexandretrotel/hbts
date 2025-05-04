@@ -7,7 +7,6 @@ import {
   renderHabitsTable,
   startLiveTimer,
 } from '@/utils/ui';
-import { formatTimeSince } from '@/utils/progress';
 
 export async function listHabitsCommand(habitService: HabitService) {
   try {
@@ -27,7 +26,7 @@ export async function listHabitsCommand(habitService: HabitService) {
     const selectedHabits = await checkbox({
       message: 'Select habits to view progress:',
       choices: habits.map((habit) => ({
-        name: `${habit.name} (Stopped: ${formatTimeSince(habit.stoppedAt)})`,
+        name: `${habit.name} (${habit.type})`,
         value: habit.id,
       })),
     });

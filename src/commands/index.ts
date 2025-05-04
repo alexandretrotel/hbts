@@ -6,6 +6,7 @@ import { addHabitCommand } from './add';
 import { listHabitsCommand } from './list';
 import { deleteHabitCommand } from './delete';
 import { collapseHabitCommand } from './collapse';
+import { logGoodHabitCommand } from './log';
 
 export async function init(program: Command, habitService: HabitService) {
   program
@@ -63,4 +64,9 @@ export async function init(program: Command, habitService: HabitService) {
     .command('collapse')
     .description('Collapse an existing habit (i.e. remove all progress)')
     .action(() => collapseHabitCommand(habitService));
+
+  program
+    .command('log')
+    .description('Log a good habit')
+    .action(() => logGoodHabitCommand(habitService));
 }

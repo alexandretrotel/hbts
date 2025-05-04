@@ -38,10 +38,19 @@ export async function addHabitCommand(
         ],
       });
 
+      const quantity = await select({
+        message: 'Does this habit have a quantity?',
+        choices: [
+          { name: 'Yes', value: true },
+          { name: 'No', value: false },
+        ],
+      });
+
       const spinner = ora('Recording good habit...').start();
       const data = insertGoodHabitSchema.parse({
         name: habit,
         frequency,
+        quantity,
         createdAt: new Date(),
       });
 

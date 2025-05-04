@@ -2,7 +2,6 @@ import { select, input, confirm } from '@inquirer/prompts';
 import chalk from 'chalk';
 import ora from 'ora';
 import { HabitService } from '@/services/habits.service';
-import { insertHabitSchema } from '@/db/zod';
 
 export async function renameHabitCommand(habitService: HabitService) {
   try {
@@ -19,7 +18,7 @@ export async function renameHabitCommand(habitService: HabitService) {
     const habitId = await select({
       message: 'Select a habit to rename:',
       choices: habits.map((habit) => ({
-        name: `${habit.name} (Stopped: ${new Date(habit.stoppedAt).toLocaleString()})`,
+        name: `${habit.name} (${habit.type})`,
         value: habit.id,
       })),
     });
@@ -36,12 +35,7 @@ export async function renameHabitCommand(habitService: HabitService) {
         if (!input.trim()) {
           return 'Habit name cannot be empty.';
         }
-        try {
-          insertHabitSchema.parse({ name: input, stoppedAt: new Date() });
-          return true;
-        } catch {
-          return 'Invalid habit name format.';
-        }
+        return true;
       },
     });
 

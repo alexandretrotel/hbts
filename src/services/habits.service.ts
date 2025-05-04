@@ -7,8 +7,10 @@ import {
 import type {
   InsertBadHabit,
   InsertGoodHabit,
+  InsertGoodHabitLog,
   SelectBadHabit,
   SelectGoodHabit,
+  SelectGoodHabitLog,
   SelectHabit,
 } from '@/db/zod';
 
@@ -27,6 +29,14 @@ export class HabitService {
     return this.repository.getHabits();
   }
 
+  async getGoodHabits(): Promise<SelectGoodHabit[]> {
+    return this.repository.getGoodHabits();
+  }
+
+  async getBadHabits(): Promise<SelectBadHabit[]> {
+    return this.repository.getBadHabits();
+  }
+
   async renameHabit(id: string, newName: string): Promise<SelectHabit[]> {
     return this.repository.renameHabit(id, newName);
   }
@@ -37,6 +47,10 @@ export class HabitService {
 
   async collapseBadHabit(id: string): Promise<SelectBadHabit[]> {
     return this.repository.collapseBadHabit(id);
+  }
+
+  async logGoodHabit(data: InsertGoodHabitLog): Promise<SelectGoodHabitLog[]> {
+    return this.repository.logGoodHabit(data);
   }
 
   async getProgress(
