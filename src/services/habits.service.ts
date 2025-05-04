@@ -114,7 +114,7 @@ export async function logGoodHabit(
 
 export async function getLastLoggedGoodHabit(
   goodHabitId: string
-): Promise<Date> {
+): Promise<Date | null> {
   const habit = await db
     .select({
       date: goodHabitsLog.date,
@@ -124,15 +124,11 @@ export async function getLastLoggedGoodHabit(
     .orderBy(desc(goodHabitsLog.date))
     .limit(1);
 
-  if (!habit[0]) {
-    throw new Error('No logged habit found');
-  }
-
-  return habit[0].date;
+  return habit[0]?.date || null;
 }
 
 export async function getProgress(
-  habits: SelectHabit[],
+  habits: SelectBadHabit[],
   strategy: MilestoneStrategy = new DefaultMilestoneStrategy()
 ): Promise<{ percentage: number; level: number }> {
   return calculateProgress(habits, strategy);

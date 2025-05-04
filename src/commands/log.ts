@@ -14,10 +14,16 @@ export async function logGoodHabitCommand() {
 
     if (goodHabits.length === 0) {
       console.log(chalk.yellow('No good habits found'));
+      return;
     }
 
     goodHabits.forEach(async (habit) => {
       const lastLogged = await getLastLoggedGoodHabit(habit.id);
+
+      if (!lastLogged) {
+        return;
+      }
+
       const isDueToday = isHabitDueToday(habit.frequency, lastLogged);
 
       if (!isDueToday) {
