@@ -2,7 +2,7 @@
   "name": "@hbts/monorepo",
   "author": "Alexandre Trotel",
   "license": "MIT",
-  "packageManager": "bun@6.0.0",
+  "packageManager": "bun@1.2.12",
   "scripts": {
     "build": "turbo run build",
     "lint": "turbo run lint",
