@@ -4,6 +4,9 @@ node_modules/**
 # FeedYourAI
 feedyourai.txt
 
+# Turborepo
+.turbo/**
+
 # output
 out/**
 dist/**
