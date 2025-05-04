@@ -1,23 +1,29 @@
-import type { HabitService } from '@/services/habits.service';
+import {
+  getGoodHabits,
+  getLastLoggedGoodHabit,
+  logGoodHabit,
+} from '@/services/habits.service';
+import { isHabitDueToday } from '@/utils/dates';
 import { confirm, input } from '@inquirer/prompts';
 import chalk from 'chalk';
 import ora from 'ora';
 
-export async function logGoodHabitCommand(habitService: HabitService) {
-  // first we need to fetch all good habits
-  // then we go trough each habit
-  // we ask the user if the habit was done today
-  // and ask the user for the quantity if it's needed
-  // then we log the habit
-
+export async function logGoodHabitCommand() {
   try {
-    const goodHabits = await habitService.getGoodHabits();
+    const goodHabits = await getGoodHabits();
 
     if (goodHabits.length === 0) {
       console.log(chalk.yellow('No good habits found'));
     }
 
     goodHabits.forEach(async (habit) => {
+      const lastLogged = await getLastLoggedGoodHabit(habit.id);
+      const isDueToday = isHabitDueToday(habit.frequency, lastLogged);
+
+      if (!isDueToday) {
+        return;
+      }
+
       const checked = await confirm({
         message: `Did you do "${habit.name}" today?`,
         default: false,
@@ -45,7 +51,7 @@ export async function logGoodHabitCommand(habitService: HabitService) {
         checked,
       };
 
-      await habitService.logGoodHabit(data);
+      await logGoodHabit(data);
       spinner.succeed(
         chalk.green(
           `Logged "${habit.name}" on ${data.date.toLocaleDateString()}`

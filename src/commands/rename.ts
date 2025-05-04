@@ -1,12 +1,12 @@
+import { getHabits, renameHabit } from '@/services/habits.service';
 import { select, input, confirm } from '@inquirer/prompts';
 import chalk from 'chalk';
 import ora from 'ora';
-import { HabitService } from '@/services/habits.service';
 
-export async function renameHabitCommand(habitService: HabitService) {
+export async function renameHabitCommand() {
   try {
     const spinner = ora('Fetching habits...').start();
-    const habits = await habitService.getHabits();
+    const habits = await getHabits();
 
     if (habits.length === 0) {
       spinner.warn(chalk.yellow('No habits recorded yet.'));
@@ -52,7 +52,7 @@ export async function renameHabitCommand(habitService: HabitService) {
     }
 
     const renameSpinner = ora('Renaming habit...').start();
-    await habitService.renameHabit(habit.id, newName, habit.type);
+    await renameHabit(habit.id, newName, habit.type);
     renameSpinner.succeed(
       chalk.green(`Habit renamed to "${newName}" successfully.`)
     );

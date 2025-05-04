@@ -1,7 +1,6 @@
 import { confirm } from '@inquirer/prompts';
 import chalk from 'chalk';
 import ora from 'ora';
-import { HabitService } from '@/services/habits.service';
 import {
   insertBadHabitSchema,
   insertGoodHabitSchema,
@@ -9,12 +8,9 @@ import {
 } from '@/db/zod';
 import { formatDate } from '@/utils/dates';
 import { select } from '@inquirer/prompts';
+import { insertBadHabit, insertGoodHabit } from '@/services/habits.service';
 
-export async function addHabitCommand(
-  habit: string,
-  habitType: HabitType,
-  habitService: HabitService
-) {
+export async function addHabitCommand(habit: string, habitType: HabitType) {
   try {
     const confirmed = await confirm({
       message: chalk.yellow(`Confirm adding "${habit}"?`),
@@ -54,7 +50,7 @@ export async function addHabitCommand(
         createdAt: new Date(),
       });
 
-      await habitService.addGoodHabit(data);
+      await insertGoodHabit(data);
       spinner.succeed(
         chalk.green(
           `Added "${data.name}" on ${formatDate(data.createdAt || new Date())}`
@@ -67,7 +63,7 @@ export async function addHabitCommand(
         stoppedAt: new Date(),
       });
 
-      await habitService.addBadHabit(data);
+      await insertBadHabit(data);
       spinner.succeed(
         chalk.green(`Stopped "${data.name}" on ${formatDate(data.stoppedAt)}`)
       );

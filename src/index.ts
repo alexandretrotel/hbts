@@ -4,8 +4,6 @@ import path from 'path';
 import { init } from '@/commands';
 import chalk from 'chalk';
 import { readFile } from 'fs/promises';
-import { habitRepository } from '@/db';
-import { HabitService } from '@/services/habits.service';
 
 const packageJsonPath = path.join(__dirname, '../package.json');
 const packageJsonData = await readFile(packageJsonPath, 'utf-8');
@@ -19,7 +17,6 @@ if (!packageJson || typeof packageJson.version !== 'string') {
 }
 
 const version: string = packageJson.version;
-const habitService = new HabitService(habitRepository);
 
 const program = new Command();
 program
@@ -27,6 +24,6 @@ program
   .description('Track bad habits with progress tracking')
   .version(version);
 
-await init(program, habitService);
+await init(program);
 
 program.parse(process.argv);

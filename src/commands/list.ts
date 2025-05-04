@@ -1,17 +1,17 @@
 import { checkbox } from '@inquirer/prompts';
 import chalk from 'chalk';
 import ora from 'ora';
-import { HabitService } from '@/services/habits.service';
+import { getHabits, getProgress } from '@/services/habits.service';
 import {
   renderProgressBar,
   renderHabitsTable,
   startLiveTimer,
 } from '@/utils/ui';
 
-export async function listHabitsCommand(habitService: HabitService) {
+export async function listHabitsCommand() {
   try {
     const spinner = ora('Fetching habits...').start();
-    const habits = await habitService.getHabits();
+    const habits = await getHabits();
 
     if (habits.length === 0) {
       spinner.warn(chalk.yellow('No habits recorded yet.'));
@@ -20,7 +20,7 @@ export async function listHabitsCommand(habitService: HabitService) {
 
     spinner.succeed(chalk.green('Habits retrieved successfully.'));
 
-    const progress = await habitService.getProgress(habits);
+    const progress = await getProgress(habits);
     renderProgressBar(progress.percentage, progress.level);
 
     const selectedHabits = await checkbox({

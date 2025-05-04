@@ -1,1 +1,1 @@
-- log good habits (check frequency to see if due today)
+- make it easy to edit a good habit

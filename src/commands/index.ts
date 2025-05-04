@@ -1,6 +1,5 @@
 import { Command } from 'commander';
 import { setupCommand } from './setup';
-import { HabitService } from '@/services/habits.service';
 import { renameHabitCommand } from './rename';
 import { addHabitCommand } from './add';
 import { listHabitsCommand } from './list';
@@ -8,7 +7,7 @@ import { deleteHabitCommand } from './delete';
 import { collapseHabitCommand } from './collapse';
 import { logGoodHabitCommand } from './log';
 
-export async function init(program: Command, habitService: HabitService) {
+export async function init(program: Command) {
   program
     .command('setup')
     .description('Set up the habits CLI for the first time')
@@ -42,31 +41,31 @@ export async function init(program: Command, habitService: HabitService) {
         process.exit(1);
       }
 
-      addHabitCommand(habit, habitType, habitService);
+      addHabitCommand(habit, habitType);
     });
 
   program
     .command('list')
     .description('List all recorded habits with progress')
-    .action(() => listHabitsCommand(habitService));
+    .action(listHabitsCommand);
 
   program
     .command('rename')
     .description('Rename an existing habit')
-    .action(() => renameHabitCommand(habitService));
+    .action(renameHabitCommand);
 
   program
     .command('delete')
     .description('Delete an existing habit')
-    .action(() => deleteHabitCommand(habitService));
+    .action(deleteHabitCommand);
 
   program
     .command('collapse')
     .description('Collapse an existing habit (i.e. remove all progress)')
-    .action(() => collapseHabitCommand(habitService));
+    .action(collapseHabitCommand);
 
   program
     .command('log')
     .description('Log a good habit')
-    .action(() => logGoodHabitCommand(habitService));
+    .action(logGoodHabitCommand);
 }
