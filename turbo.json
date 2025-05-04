@@ -16,8 +16,8 @@
     "format": {
       "cache": false
     },
-    "publish": {
-      "dependsOn": ["^publish"],
+    "upload": {
+      "dependsOn": ["^upload"],
       "outputs": [],
       "cache": false,
       "interactive": true

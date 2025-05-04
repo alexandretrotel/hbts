@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "bun run clean && bun build src/index.ts --outdir=dist --target=node --minify",
-    "publish": "bun run build && bun publish",
+    "upload": "bun run build && bun publish",
     "db:generate": "turbo run db:generate",
     "db:push": "turbo run db:push",
     "db:migrate": "turbo run db:migrate",
