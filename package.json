@@ -9,6 +9,8 @@
     "test": "turbo run test",
     "format": "turbo run format",
     "upload": "turbo run upload",
+    "cli:upload": "turbo run --filter=@hbts/cli upload",
+    "db:upload": "turbo run --filter=@hbts/db upload",
     "db:generate": "turbo run db:generate",
     "db:push": "turbo run db:push",
     "db:migrate": "turbo run db:migrate",

@@ -22,6 +22,18 @@
       "cache": false,
       "interactive": true
     },
+    "cli:upload": {
+      "dependsOn": ["^upload"],
+      "outputs": [],
+      "cache": false,
+      "interactive": true
+    },
+    "db:upload": {
+      "dependsOn": ["^upload"],
+      "outputs": [],
+      "cache": false,
+      "interactive": true
+    },
     "db:push": {
       "interactive": true,
       "cache": false
