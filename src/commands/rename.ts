@@ -15,15 +15,14 @@ export async function renameHabitCommand() {
 
     spinner.succeed(chalk.green('Habits retrieved successfully.'));
 
-    const habit = await select({
+    const selectedHabit = await select({
       message: 'Select a habit to rename:',
       choices: habits.map((habit) => ({
         name: `${habit.name} (${habit.type})`,
-        value: { id: habit.id, name: habit.name, type: habit.type },
+        value: habit,
       })),
     });
 
-    const selectedHabit = habits.find((habit) => habit.id === habit.id);
     if (!selectedHabit) {
       console.error(chalk.red('Error: Selected habit not found.'));
       return;
@@ -52,7 +51,7 @@ export async function renameHabitCommand() {
     }
 
     const renameSpinner = ora('Renaming habit...').start();
-    await renameHabit(habit.id, newName, habit.type);
+    await renameHabit(selectedHabit.id, newName, selectedHabit.type);
     renameSpinner.succeed(
       chalk.green(`Habit renamed to "${newName}" successfully.`)
     );

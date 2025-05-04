@@ -22,7 +22,6 @@ export const isHabitDueToday = (
   lastLoggedDate.setHours(0, 0, 0, 0); // Normalize time to midnight
 
   switch (frequency) {
-    case 'multiple_times_a_day':
     case 'daily':
       return true;
     case 'weekly':

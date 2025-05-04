@@ -1,4 +1,5 @@
 import type {
+  FrequencyEnum,
   HabitType,
   InsertBadHabit,
   InsertGoodHabit,
@@ -135,4 +136,16 @@ export async function getProgress(
   strategy: MilestoneStrategy = new DefaultMilestoneStrategy()
 ): Promise<{ percentage: number; level: number }> {
   return calculateProgress(habits, strategy);
+}
+
+export async function editHabit(
+  id: string,
+  frequency: FrequencyEnum,
+  quantity: boolean
+): Promise<SelectGoodHabit[]> {
+  return db
+    .update(goodHabits)
+    .set({ frequency, quantity })
+    .where(eq(goodHabits.id, id))
+    .returning();
 }

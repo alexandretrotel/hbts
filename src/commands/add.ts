@@ -30,7 +30,6 @@ export async function addHabitCommand(habit: string, habitType: HabitType) {
           { name: 'Weekly', value: 'weekly' },
           { name: 'Monthly', value: 'monthly' },
           { name: 'Yearly', value: 'yearly' },
-          { name: 'Multiple times a day', value: 'multiple_times_a_day' },
         ],
       });
 

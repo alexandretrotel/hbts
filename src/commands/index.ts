@@ -6,6 +6,7 @@ import { listHabitsCommand } from './list';
 import { deleteHabitCommand } from './delete';
 import { collapseHabitCommand } from './collapse';
 import { logGoodHabitCommand } from './log';
+import { editHabitCommand } from './edit';
 
 export async function init(program: Command) {
   program
@@ -68,4 +69,9 @@ export async function init(program: Command) {
     .command('log')
     .description('Log a good habit')
     .action(logGoodHabitCommand);
+
+  program
+    .command('edit')
+    .description('Edit an existing habit')
+    .action(editHabitCommand);
 }
