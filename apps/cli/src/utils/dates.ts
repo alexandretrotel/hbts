@@ -1,4 +1,4 @@
-import type { FrequencyEnum } from '@/db/zod';
+import type { FrequencyEnum } from '../../../../packages/db/src/zod';
 import {
   differenceInWeeks,
   differenceInMonths,

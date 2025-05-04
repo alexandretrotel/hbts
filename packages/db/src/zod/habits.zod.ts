@@ -1,6 +1,6 @@
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
-import type { z } from 'zod';
-import * as schema from '@/db/schema';
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import type { z } from "zod";
+import * as schema from "@/db/schema";
 
 export const selectBadHabitSchema = createSelectSchema(schema.badHabits);
 export const insertBadHabitSchema = createInsertSchema(schema.badHabits);
@@ -27,4 +27,4 @@ export type InsertGoodHabitLog = z.infer<typeof insertGoodHabitLogSchema>;
 export type SelectHabit = SelectBadHabit | SelectGoodHabit;
 export type InsertHabit = InsertBadHabit | InsertGoodHabit;
 
-export type HabitType = 'bad' | 'good';
+export type HabitType = "bad" | "good";

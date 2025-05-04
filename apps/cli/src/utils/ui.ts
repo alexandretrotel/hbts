@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import { table } from 'table';
 import cliProgress from 'cli-progress';
 import { formatTimeSince } from './progress';
-import type { SelectBadHabit } from '@/db/zod';
+import type { SelectBadHabit } from '../../../../packages/db/src/zod';
 
 export function renderProgressBar(percentage: number, level: number) {
   const progressBar = new cliProgress.SingleBar(

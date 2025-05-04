@@ -28,7 +28,6 @@
     "@types/cli-progress": "^3.11.6",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
-    "drizzle-kit": "^0.31.0",
     "eslint": "^9.25.1",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.2.6",
@@ -41,14 +40,14 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@hbts/db": "workspace:*",
     "@inquirer/prompts": "^7.5.0",
-    "@neondatabase/serverless": "^1.0.0",
     "chalk": "^5.4.1",
     "cli-progress": "^3.12.0",
     "commander": "^13.1.0",
+    "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
-    "drizzle-zod": "^0.7.1",
     "ora": "^8.2.0",
     "table": "^6.9.0",
     "zod": "^3.24.3"

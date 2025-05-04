@@ -1,5 +1,5 @@
 import { DefaultMilestoneStrategy, type MilestoneStrategy } from './milestones';
-import type { SelectBadHabit } from '@/db/zod';
+import type { SelectBadHabit } from '../../../../packages/db/src/zod';
 import { formatDate } from './dates';
 
 export interface Progress {

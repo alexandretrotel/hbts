@@ -8,9 +8,9 @@ import type {
   SelectGoodHabit,
   SelectGoodHabitLog,
   SelectHabit,
-} from '@/db/zod';
-import { db } from '@/db';
-import { badHabits, goodHabits, goodHabitsLog } from '@/db/schema';
+} from '@hbts/db/zod';
+import { db } from '@/lib/db';
+import { badHabits, goodHabits, goodHabitsLog } from '@hbts/db/schema';
 import { desc, eq } from 'drizzle-orm';
 import {
   DefaultMilestoneStrategy,
