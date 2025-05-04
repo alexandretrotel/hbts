@@ -46,7 +46,7 @@ export async function editHabitCommand() {
 
     const confirmed = await confirm({
       message: chalk.yellow(
-        `Confirm editing "${selectedHabit.name}" to ${newFrequency} frequency with quantity ${newQuantity}?`
+        `Confirm editing "${selectedHabit.name}" to ${newFrequency} frequency with quantity ${newQuantity ? 'enabled' : 'disabled'}?`
       ),
       default: false,
     });
