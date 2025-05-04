@@ -1,18 +1,22 @@
 {
-    "name": "@hbts/monorepo",
-    "author": "Alexandre Trotel",
-    "license": "MIT",
-    "packageManager": "bun@6.0.0",
-    "scripts": {
-        "build": "turbo run build",
-        "lint": "turbo run lint",
-        "test": "turbo run test",
-        "format": "turbo run format"
-    },
-    "workspaces": [
-        "apps/*"
-    ],
-    "devDependencies": {
-        "turbo": "^2.5.2"
-    }
+  "name": "@hbts/monorepo",
+  "author": "Alexandre Trotel",
+  "license": "MIT",
+  "packageManager": "bun@6.0.0",
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "format": "turbo run format",
+    "db:generate": "turbo run db:generate",
+    "db:push": "turbo run db:push",
+    "db:migrate": "turbo run db:migrate",
+    "db:studio": "turbo run db:studio"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "devDependencies": {
+    "turbo": "^2.5.2"
+  }
 }
