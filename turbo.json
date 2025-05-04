@@ -17,6 +17,8 @@
       "cache": false
     },
     "publish": {
+      "dependsOn": ["^publish"],
+      "outputs": [],
       "cache": false,
       "interactive": true
     },
