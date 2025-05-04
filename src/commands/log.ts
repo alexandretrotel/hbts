@@ -17,10 +17,12 @@ export async function logGoodHabitCommand() {
       return;
     }
 
+    let ignored = 0;
     goodHabits.forEach(async (habit) => {
       const lastLogged = await getLastLoggedGoodHabit(habit.id);
 
       if (!lastLogged) {
+        ignored++;
         return;
       }
 
@@ -64,6 +66,11 @@ export async function logGoodHabitCommand() {
         )
       );
     });
+
+    if (ignored === goodHabits.length) {
+      console.log(chalk.yellow('No good habits due today'));
+      return;
+    }
 
     console.log(chalk.green('All habits logged successfully!'));
   } catch (error) {

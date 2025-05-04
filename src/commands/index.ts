@@ -19,7 +19,7 @@ export async function init(program: Command) {
     .description('Record when you stopped a bad habit')
     .argument(
       '<habit>',
-      'Name of the habit (e.g., "watching porn", "smoking", etc...)'
+      'Name of the habit (e.g., "watching porn", "smoking", "do workout", "drink water", etc...)'
     )
     .option('-g, --good', 'Mark the habit as a good habit')
     .option('-b, --bad', 'Mark the habit as a bad habit')
