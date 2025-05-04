@@ -4,8 +4,13 @@
   "main": "index.ts",
   "type": "module",
   "version": "1.0.0",
-  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
+    "clean": "rm -rf dist",
+    "build": "bun run clean && bun build src/index.ts --outdir=dist --target=node --minify",
+    "publish": "bun run build && bun publish",
     "db:generate": "turbo run db:generate",
     "db:push": "turbo run db:push",
     "db:migrate": "turbo run db:migrate",
@@ -27,5 +32,8 @@
     "@neondatabase/serverless": "^1.0.0",
     "drizzle-orm": "^0.43.1",
     "drizzle-zod": "^0.7.1"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
