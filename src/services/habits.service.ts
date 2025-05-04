@@ -1,16 +1,26 @@
 import type { HabitRepository } from '@/db/repositories';
-import type { InsertHabit, SelectHabit } from '@/db/zod';
 import { calculateProgress } from '@/utils/progress';
 import {
   DefaultMilestoneStrategy,
   type MilestoneStrategy,
 } from '@/utils/milestones';
+import type {
+  InsertBadHabit,
+  InsertGoodHabit,
+  SelectBadHabit,
+  SelectGoodHabit,
+  SelectHabit,
+} from '@/db/zod';
 
 export class HabitService {
   constructor(private repository: HabitRepository) {}
 
-  async addHabit(habit: InsertHabit): Promise<SelectHabit[]> {
-    return this.repository.insertHabit(habit);
+  async addBadHabit(habit: InsertBadHabit): Promise<SelectBadHabit[]> {
+    return this.repository.insertBadHabit(habit);
+  }
+
+  async addGoodHabit(habit: InsertGoodHabit): Promise<SelectGoodHabit[]> {
+    return this.repository.insertGoodHabit(habit);
   }
 
   async getHabits(): Promise<SelectHabit[]> {
@@ -25,8 +35,8 @@ export class HabitService {
     return this.repository.deleteHabit(id);
   }
 
-  async collapseHabit(id: string): Promise<SelectHabit[]> {
-    return this.repository.collapseHabit(id);
+  async collapseBadHabit(id: string): Promise<SelectBadHabit[]> {
+    return this.repository.collapseBadHabit(id);
   }
 
   async getProgress(

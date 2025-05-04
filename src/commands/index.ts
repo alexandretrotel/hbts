@@ -20,7 +20,29 @@ export async function init(program: Command, habitService: HabitService) {
       '<habit>',
       'Name of the habit (e.g., "watching porn", "smoking", etc...)'
     )
-    .action((habit: string) => addHabitCommand(habit, habitService));
+    .option('-g, --good', 'Mark the habit as a good habit')
+    .option('-b, --bad', 'Mark the habit as a bad habit')
+    .action((habit: string, options: { good?: boolean; bad?: boolean }) => {
+      if (options.good && options.bad) {
+        console.error(
+          'You cannot specify both --good and --bad for the same habit.'
+        );
+        process.exit(1);
+      }
+
+      const habitType = options.good
+        ? 'good'
+        : options.bad
+          ? 'bad'
+          : 'unspecified';
+
+      if (habitType === 'unspecified') {
+        console.error('You must specify either --good or --bad for the habit.');
+        process.exit(1);
+      }
+
+      addHabitCommand(habit, habitType, habitService);
+    });
 
   program
     .command('list')

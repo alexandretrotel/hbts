@@ -2,11 +2,17 @@ import { confirm } from '@inquirer/prompts';
 import chalk from 'chalk';
 import ora from 'ora';
 import { HabitService } from '@/services/habits.service';
-import { insertHabitSchema } from '@/db/zod';
+import {
+  insertBadHabitSchema,
+  insertGoodHabitSchema,
+  type HabitType,
+} from '@/db/zod';
 import { formatDate } from '@/utils/dates';
+import { select } from '@inquirer/prompts';
 
 export async function addHabitCommand(
   habit: string,
+  habitType: HabitType,
   habitService: HabitService
 ) {
   try {
@@ -20,16 +26,43 @@ export async function addHabitCommand(
       return;
     }
 
-    const spinner = ora('Recording habit...').start();
-    const data = insertHabitSchema.parse({
-      name: habit,
-      stoppedAt: new Date(),
-    });
+    if (habitType === 'good') {
+      const frequency = await select({
+        message: 'How often do you want to track this habit?',
+        choices: [
+          { name: 'Daily', value: 'daily' },
+          { name: 'Weekly', value: 'weekly' },
+          { name: 'Monthly', value: 'monthly' },
+          { name: 'Yearly', value: 'yearly' },
+          { name: 'Multiple times a day', value: 'multiple_times_a_day' },
+        ],
+      });
 
-    await habitService.addHabit(data);
-    spinner.succeed(
-      chalk.green(`Stopped "${data.name}" on ${formatDate(data.stoppedAt)}`)
-    );
+      const spinner = ora('Recording good habit...').start();
+      const data = insertGoodHabitSchema.parse({
+        name: habit,
+        frequency,
+        createdAt: new Date(),
+      });
+
+      await habitService.addGoodHabit(data);
+      spinner.succeed(
+        chalk.green(
+          `Added "${data.name}" on ${formatDate(data.createdAt || new Date())}`
+        )
+      );
+    } else {
+      const spinner = ora('Recording bad habit...').start();
+      const data = insertBadHabitSchema.parse({
+        name: habit,
+        stoppedAt: new Date(),
+      });
+
+      await habitService.addBadHabit(data);
+      spinner.succeed(
+        chalk.green(`Stopped "${data.name}" on ${formatDate(data.stoppedAt)}`)
+      );
+    }
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.error(chalk.red(`Error adding habit: ${message}`));
