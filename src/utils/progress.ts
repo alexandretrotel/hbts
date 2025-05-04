@@ -1,5 +1,5 @@
 import { DefaultMilestoneStrategy, type MilestoneStrategy } from './milestones';
-import type { SelectHabit } from '@/db/zod';
+import type { SelectBadHabit } from '@/db/zod';
 import { formatDate } from './dates';
 
 export interface Progress {
@@ -23,7 +23,7 @@ export function formatTimeSince(date: Date, live = false): string {
 }
 
 export function calculateProgress(
-  habits: SelectHabit[],
+  habits: SelectBadHabit[],
   strategy: MilestoneStrategy = new DefaultMilestoneStrategy()
 ): Progress {
   if (habits.length === 0) {

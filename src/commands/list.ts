@@ -7,11 +7,15 @@ import {
   renderHabitsTable,
   startLiveTimer,
 } from '@/utils/ui';
+import type { SelectBadHabit } from '@/db/zod';
 
 export async function listHabitsCommand() {
   try {
     const spinner = ora('Fetching habits...').start();
     const habits = await getHabits();
+    const badHabits: SelectBadHabit[] = habits.filter(
+      (habit) => habit.type === 'bad'
+    ) as SelectBadHabit[];
 
     if (habits.length === 0) {
       spinner.warn(chalk.yellow('No habits recorded yet.'));
@@ -20,7 +24,7 @@ export async function listHabitsCommand() {
 
     spinner.succeed(chalk.green('Habits retrieved successfully.'));
 
-    const progress = await getProgress(habits);
+    const progress = await getProgress(badHabits);
     renderProgressBar(progress.percentage, progress.level);
 
     const selectedHabits = await checkbox({
@@ -36,8 +40,11 @@ export async function listHabitsCommand() {
         ? habits.filter((habit) => selectedHabits.includes(habit.id))
         : habits;
 
-    renderHabitsTable(habitsToShow);
-    startLiveTimer(habitsToShow);
+    const badHabitsToShow: SelectBadHabit[] = habitsToShow.filter(
+      (habit) => habit.type === 'bad'
+    ) as SelectBadHabit[];
+    renderHabitsTable(badHabitsToShow);
+    startLiveTimer(badHabitsToShow);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     console.error(chalk.red(`Error listing habits: ${message}`));

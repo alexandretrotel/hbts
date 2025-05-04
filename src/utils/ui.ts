@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import { table } from 'table';
 import cliProgress from 'cli-progress';
 import { formatTimeSince } from './progress';
-import type { SelectHabit } from '@/db/zod';
+import type { SelectBadHabit } from '@/db/zod';
 
 export function renderProgressBar(percentage: number, level: number) {
   const progressBar = new cliProgress.SingleBar(
@@ -20,7 +20,7 @@ export function renderProgressBar(percentage: number, level: number) {
   console.log();
 }
 
-export function renderHabitsTable(habits: SelectHabit[]) {
+export function renderHabitsTable(habits: SelectBadHabit[]) {
   const tableData = [
     [chalk.bold('Habit'), chalk.bold('Stopped'), chalk.bold('Time Since')],
     ...habits.map(({ name, stoppedAt }) => [
@@ -39,7 +39,7 @@ export function renderHabitsTable(habits: SelectHabit[]) {
   );
 }
 
-export function startLiveTimer(habits: SelectHabit[]) {
+export function startLiveTimer(habits: SelectBadHabit[]) {
   if (habits.length === 0) return;
 
   console.log(
