@@ -1,2 +1,1 @@
-- review all old commands to encapsulate good or bad habits logic
 - log good habits (check frequency to see if due today)
