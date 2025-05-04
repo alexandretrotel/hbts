@@ -14,7 +14,8 @@
     "build": "bun run clean && bun build src/index.ts --outdir=dist --target=node --minify",
     "start": "bun run src/index.ts",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "publish": "bun run build && bun publish"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.1",

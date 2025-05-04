@@ -16,6 +16,10 @@
     "format": {
       "cache": false
     },
+    "publish": {
+      "cache": false,
+      "interactive": true
+    },
     "db:push": {
       "interactive": true,
       "cache": false
