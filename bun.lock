@@ -9,7 +9,7 @@
     },
     "apps/cli": {
       "name": "hbts",
-      "version": "1.1.3",
+      "version": "1.1.4",
       "bin": {
         "hbts": "./dist/index.js",
       },
@@ -48,6 +48,7 @@
     },
     "packages/db": {
       "name": "@hbts/db",
+      "version": "1.0.0",
       "dependencies": {
         "@neondatabase/serverless": "^1.0.0",
         "drizzle-orm": "^0.43.1",
