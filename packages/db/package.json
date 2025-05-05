@@ -26,7 +26,9 @@
   "exports": {
     ".": "./src/index.ts",
     "./zod": "./src/zod/index.ts",
-    "./schema": "./src/schema/index.ts"
+    "./zod/*": "./src/zod/*.ts",
+    "./schema": "./src/schema/index.ts",
+    "./schema/*": "./src/schema/*.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.0",

@@ -21,15 +21,13 @@ export async function logGoodHabitCommand() {
     goodHabits.forEach(async (habit) => {
       const lastLogged = await getLastLoggedGoodHabit(habit.id);
 
-      if (!lastLogged) {
-        return;
-      }
+      if (lastLogged) {
+        const isDueToday = isHabitDueToday(habit.frequency, lastLogged);
 
-      const isDueToday = isHabitDueToday(habit.frequency, lastLogged);
-
-      if (!isDueToday) {
-        ignored++;
-        return;
+        if (!isDueToday) {
+          ignored++;
+          return;
+        }
       }
 
       const checked = await confirm({

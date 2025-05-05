@@ -8,12 +8,16 @@ import path from "path";
 const homeEnvPath = path.join(os.homedir(), ".habits.env");
 dotenv.config({ path: [homeEnvPath] });
 
-export const initDb = async (onError: () => Promise<void>) => {
+const sql = neon(process.env.DATABASE_URL!);
+const db = drizzle({ client: sql, schema });
+
+export const initDb = async (
+  onError: () => Promise<void>
+): Promise<typeof db> => {
   if (!process.env.DATABASE_URL) {
     await onError();
     process.exit(0);
   }
 
-  const sql = neon(process.env.DATABASE_URL!);
-  return drizzle({ client: sql, schema });
+  return db;
 };
