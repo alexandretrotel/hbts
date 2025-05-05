@@ -18,7 +18,7 @@ export async function logGoodHabitCommand() {
     }
 
     let ignored = 0;
-    goodHabits.forEach(async (habit) => {
+    for (const habit of goodHabits) {
       const lastLogged = await getLastLoggedGoodHabit(habit.id);
 
       if (lastLogged) {
@@ -63,7 +63,7 @@ export async function logGoodHabitCommand() {
           `Logged "${habit.name}" on ${data.date.toLocaleDateString()}`
         )
       );
-    });
+    }
 
     if (ignored === goodHabits.length) {
       console.log(chalk.yellow('No good habits due today'));
