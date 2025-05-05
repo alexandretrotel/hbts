@@ -22,13 +22,13 @@ export async function logGoodHabitCommand() {
       const lastLogged = await getLastLoggedGoodHabit(habit.id);
 
       if (!lastLogged) {
-        ignored++;
         return;
       }
 
       const isDueToday = isHabitDueToday(habit.frequency, lastLogged);
 
       if (!isDueToday) {
+        ignored++;
         return;
       }
 
