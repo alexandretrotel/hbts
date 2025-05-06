@@ -1,8 +1,9 @@
-import type { FrequencyEnum } from '../../../../packages/db/src/zod';
+import type { FrequencyEnum } from '@hbts/db/zod';
 import {
   differenceInWeeks,
   differenceInMonths,
   differenceInYears,
+  differenceInDays,
 } from 'date-fns';
 
 export const formatDate = (date: Date): string =>
@@ -23,7 +24,7 @@ export const isHabitDueToday = (
 
   switch (frequency) {
     case 'daily':
-      return true;
+      return differenceInDays(today, lastLogged) >= 1;
     case 'weekly':
       return differenceInWeeks(today, lastLogged) >= 1;
     case 'monthly':

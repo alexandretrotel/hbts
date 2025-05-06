@@ -1,4 +1,4 @@
-import type { FrequencyEnum } from '../../../../packages/db/src/zod';
+import type { FrequencyEnum } from '@hbts/db/zod';
 import { editHabit, getGoodHabits } from '@/services/habits.service';
 import { confirm, select } from '@inquirer/prompts';
 import chalk from 'chalk';

@@ -7,7 +7,7 @@ import {
   renderHabitsTable,
   startLiveTimer,
 } from '@/utils/ui';
-import type { SelectBadHabit } from '../../../../packages/db/src/zod';
+import type { SelectBadHabit } from '@hbts/db/zod';
 
 export async function listHabitsCommand() {
   try {
