@@ -10,8 +10,9 @@ import {
 import type { SelectBadHabit } from '@hbts/db/zod';
 
 export async function listHabitsCommand() {
+  const spinner = ora('Fetching habits...').start();
+
   try {
-    const spinner = ora('Fetching habits...').start();
     const habits = await getHabits();
     const badHabits: SelectBadHabit[] = habits.filter(
       (habit) => habit.type === 'bad'
@@ -46,6 +47,7 @@ export async function listHabitsCommand() {
     renderHabitsTable(badHabitsToShow);
     startLiveTimer(badHabitsToShow);
   } catch (error) {
+    spinner.stop();
     const message = error instanceof Error ? error.message : String(error);
     console.error(chalk.red(`Error listing habits: ${message}`));
   }

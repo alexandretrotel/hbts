@@ -9,6 +9,8 @@ import chalk from 'chalk';
 import ora from 'ora';
 
 export async function logGoodHabitCommand() {
+  const spinner = ora('Logging good habit...');
+
   try {
     const goodHabits = await getGoodHabits();
 
@@ -49,7 +51,7 @@ export async function logGoodHabitCommand() {
         });
       }
 
-      const spinner = ora('Logging good habit...').start();
+      spinner.start();
       const data = {
         goodHabitId: habit.id,
         date: new Date(),
@@ -72,6 +74,7 @@ export async function logGoodHabitCommand() {
 
     console.log(chalk.green('All habits logged successfully!'));
   } catch (error) {
+    spinner.stop();
     const message = error instanceof Error ? error.message : String(error);
     console.error(chalk.red(`Error logging habit: ${message}`));
   }

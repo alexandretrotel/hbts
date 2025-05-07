@@ -5,8 +5,10 @@ import chalk from 'chalk';
 import ora from 'ora';
 
 export async function editHabitCommand() {
+  const spinner = ora('Fetching good habits...').start();
+  const editSpinner = ora('Editing habit...');
+
   try {
-    const spinner = ora('Fetching good habits...').start();
     const goodHabits = await getGoodHabits();
 
     if (goodHabits.length === 0) {
@@ -56,7 +58,7 @@ export async function editHabitCommand() {
       return;
     }
 
-    const editSpinner = ora('Editing habit...').start();
+    editSpinner.start();
     await editHabit(selectedHabit.id, newFrequency, newQuantity);
     editSpinner.succeed(
       chalk.green(
@@ -64,6 +66,8 @@ export async function editHabitCommand() {
       )
     );
   } catch (error) {
+    spinner.stop();
+    editSpinner.stop();
     const message = error instanceof Error ? error.message : String(error);
     console.error(chalk.red(`Error editing habit: ${message}`));
   }

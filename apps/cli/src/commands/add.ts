@@ -11,6 +11,8 @@ import { select } from '@inquirer/prompts';
 import { insertBadHabit, insertGoodHabit } from '@/services/habits.service';
 
 export async function addHabitCommand(habit: string, habitType: HabitType) {
+  const spinner = ora('Recording good habit...');
+
   try {
     const confirmed = await confirm({
       message: chalk.yellow(`Confirm adding "${habit}"?`),
@@ -41,7 +43,7 @@ export async function addHabitCommand(habit: string, habitType: HabitType) {
         ],
       });
 
-      const spinner = ora('Recording good habit...').start();
+      spinner.start();
       const data = insertGoodHabitSchema.parse({
         name: habit,
         frequency,
@@ -68,6 +70,7 @@ export async function addHabitCommand(habit: string, habitType: HabitType) {
       );
     }
   } catch (error) {
+    spinner.stop();
     const message = error instanceof Error ? error.message : String(error);
     console.error(chalk.red(`Error adding habit: ${message}`));
   }

@@ -4,8 +4,9 @@ import { checkbox, confirm } from '@inquirer/prompts';
 import { deleteHabit, getHabits } from '@/services/habits.service';
 
 export async function deleteHabitCommand() {
+  const spinner = ora('Fetching habits...').start();
+
   try {
-    const spinner = ora('Fetching habits...').start();
     const habits = await getHabits();
 
     if (habits.length === 0) {
@@ -43,6 +44,7 @@ export async function deleteHabitCommand() {
       console.log(chalk.green(`Deleted habit: ${habit.name}`));
     }
   } catch (error) {
+    spinner.stop();
     const message = error instanceof Error ? error.message : String(error);
     console.error(chalk.red(`Error deleting habit: ${message}`));
   }

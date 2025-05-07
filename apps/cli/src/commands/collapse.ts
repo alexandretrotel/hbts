@@ -5,8 +5,9 @@ import { checkbox, confirm } from '@inquirer/prompts';
 import { formatTimeSince } from '@/utils/progress';
 
 export async function collapseHabitCommand() {
+  const spinner = ora('Fetching habits...').start();
+
   try {
-    const spinner = ora('Fetching habits...').start();
     const habits = await getBadHabits();
 
     if (habits.length === 0) {
@@ -44,6 +45,7 @@ export async function collapseHabitCommand() {
       console.log(chalk.green(`Collapsed habit: ${habit.name}`));
     }
   } catch (error) {
+    spinner.stop();
     const message = error instanceof Error ? error.message : String(error);
     console.error(chalk.red(`Error collapsing habit: ${message}`));
   }

@@ -4,8 +4,9 @@ import chalk from 'chalk';
 import ora from 'ora';
 
 export async function renameHabitCommand() {
+  const spinner = ora('Fetching habits...').start();
+
   try {
-    const spinner = ora('Fetching habits...').start();
     const habits = await getHabits();
 
     if (habits.length === 0) {
@@ -56,6 +57,7 @@ export async function renameHabitCommand() {
       chalk.green(`Habit renamed to "${newName}" successfully.`)
     );
   } catch (error) {
+    spinner.stop();
     const message = error instanceof Error ? error.message : String(error);
     console.error(chalk.red(`Error renaming habit: ${message}`));
   }
