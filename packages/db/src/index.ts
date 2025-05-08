@@ -12,9 +12,9 @@ const sql = neon(process.env.DATABASE_URL!);
 const db = drizzle({ client: sql, schema });
 
 export const initDb = async (
-  onError: () => Promise<void>
+  onError?: () => Promise<void>
 ): Promise<typeof db> => {
-  if (!process.env.DATABASE_URL) {
+  if (!process.env.DATABASE_URL && onError) {
     await onError();
     process.exit(0);
   }
