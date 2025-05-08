@@ -147,7 +147,7 @@ export async function getLastLoggedGoodHabit(goodHabitId: string) {
   return habit[0]?.date || null;
 }
 
-export async function getProgress(
+export function getProgress(
   habits: SelectBadHabit[],
   strategy: MilestoneStrategy = new DefaultMilestoneStrategy()
 ) {

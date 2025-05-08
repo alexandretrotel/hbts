@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
+import { useProgress } from "@/hooks/use-progress";
 
 interface User {
   name: string;
@@ -11,22 +12,13 @@ interface User {
 const LOGO_URL = "/logo.png";
 
 export function UserProfile() {
-  let user: User = {
+  const progress = useProgress();
+
+  const user: User = {
     name: "Alexandre Trotel",
     avatar: `${LOGO_URL}?height=100&width=100`,
-    level: null,
-    progress: null,
-  };
-
-  const { level, progress } = {
-    level: 1,
-    progress: 50,
-  };
-
-  user = {
-    ...user,
-    level,
-    progress,
+    level: progress.level,
+    progress: progress.percentage,
   };
 
   return (

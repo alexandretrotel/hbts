@@ -25,7 +25,7 @@ export async function listHabitsCommand() {
 
     spinner.succeed(chalk.green('Habits retrieved successfully.'));
 
-    const progress = await getProgress(badHabits);
+    const progress = getProgress(badHabits);
     renderProgressBar(progress.percentage, progress.level);
 
     const selectedHabits = await checkbox({
