@@ -1,7 +1,7 @@
 {
   "name": "@hbts/common",
   "module": "index.ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -20,5 +20,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./*": "./src/utils/*.ts"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
