@@ -30,18 +30,20 @@ export function BadHabits() {
 
   return (
     <SectionCard title="Bad Habits">
-      {habits.map((habit) => (
-        <div key={habit.id} className="space-y-2">
-          <h3 className="text-lg font-medium">{habit.name}</h3>
-          <div className="flex items-center gap-2 text-sm">
-            <ClockIcon className="h-4 w-4 text-rose-500" />
-            <span>Clean for:</span>
-            <span className="font-mono font-medium">
-              {timers[habit.id] || "Loading..."}
-            </span>
+      {habits
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((habit) => (
+          <div key={habit.id} className="space-y-2">
+            <h3 className="text-lg font-medium">{habit.name}</h3>
+            <div className="flex items-center gap-2 text-sm">
+              <ClockIcon className="h-4 w-4 text-rose-500" />
+              <span>Clean for:</span>
+              <span className="font-mono font-medium">
+                {timers[habit.id] || "Loading..."}
+              </span>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
     </SectionCard>
   );
 }

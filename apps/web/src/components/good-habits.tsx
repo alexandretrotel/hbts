@@ -29,62 +29,64 @@ export function GoodHabits() {
 
   return (
     <SectionCard title="Good Habits" badge="Weekly">
-      {completeHabits.map((habit) => (
-        <div key={habit.id} className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-medium">{habit.name}</h3>
-            <Badge
-              variant="secondary"
-              className="flex items-center gap-1 font-normal"
-            >
-              <RepeatIcon className="h-3 w-3" />
-              {habit.frequency}
-            </Badge>
-          </div>
-
-          <div className="flex flex-wrap gap-1">
-            {habit.streakDays.map((active, i) => (
-              <div key={i} className="flex flex-col items-center">
-                <div
-                  className={`h-4 w-4 rounded-sm ${
-                    active
-                      ? "bg-emerald-500 dark:bg-emerald-600"
-                      : "bg-zinc-200 dark:bg-zinc-700"
-                  }`}
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap gap-4 text-sm text-zinc-600 dark:text-zinc-400">
-            <div className="flex items-center gap-1">
-              <CalendarIcon className="h-4 w-4" />
-              <span>
-                Current streak: <strong>{habit.currentStreak}</strong>
-              </span>
+      {completeHabits
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((habit) => (
+          <div key={habit.id} className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-medium">{habit.name}</h3>
+              <Badge
+                variant="secondary"
+                className="flex items-center gap-1 font-normal"
+              >
+                <RepeatIcon className="h-3 w-3" />
+                {habit.frequency}
+              </Badge>
             </div>
 
-            {habit.quantity && habit.totalQuantity !== null && (
-              <div className="flex items-center gap-1">
-                <BarChart3Icon className="h-4 w-4" />
-                <span>
-                  Total: <strong>{habit.totalQuantity}</strong>
-                </span>
-              </div>
-            )}
+            <div className="flex flex-wrap gap-1">
+              {habit.streakDays.map((active, i) => (
+                <div key={i} className="flex flex-col items-center">
+                  <div
+                    className={`h-4 w-4 rounded-sm ${
+                      active
+                        ? "bg-emerald-500 dark:bg-emerald-600"
+                        : "bg-zinc-200 dark:bg-zinc-700"
+                    }`}
+                  />
+                </div>
+              ))}
+            </div>
 
-            {habit.projectedYearlyQuantity !== null && (
+            <div className="flex flex-wrap gap-4 text-sm text-zinc-600 dark:text-zinc-400">
               <div className="flex items-center gap-1">
-                <BarChart3Icon className="h-4 w-4" />
+                <CalendarIcon className="h-4 w-4" />
                 <span>
-                  Projected yearly:{" "}
-                  <strong>{habit.projectedYearlyQuantity}</strong>
+                  Current streak: <strong>{habit.currentStreak}</strong>
                 </span>
               </div>
-            )}
+
+              {habit.quantity && habit.totalQuantity !== null && (
+                <div className="flex items-center gap-1">
+                  <BarChart3Icon className="h-4 w-4" />
+                  <span>
+                    Total: <strong>{habit.totalQuantity}</strong>
+                  </span>
+                </div>
+              )}
+
+              {habit.projectedYearlyQuantity !== null && (
+                <div className="flex items-center gap-1">
+                  <BarChart3Icon className="h-4 w-4" />
+                  <span>
+                    Projected yearly:{" "}
+                    <strong>{habit.projectedYearlyQuantity}</strong>
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
     </SectionCard>
   );
 }
