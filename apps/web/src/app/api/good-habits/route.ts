@@ -1,16 +1,16 @@
 import { db } from "@/lib/db";
-import { badHabits as badHabitsTable } from "@hbts/db/schema";
+import { goodHabits as goodHabitsTable } from "@hbts/db/schema";
 
-const getBadHabits = async () => {
-  const habits = await db.select().from(badHabitsTable).execute();
+const getGoodHabits = async () => {
+  const habits = await db.select().from(goodHabitsTable).execute();
   return habits;
 };
 
-export type BadHabit = Awaited<ReturnType<typeof getBadHabits>>[number];
+export type GoodHabit = Awaited<ReturnType<typeof getGoodHabits>>[number];
 
 export async function GET() {
   try {
-    const habits = await getBadHabits();
+    const habits = await getGoodHabits();
     return Response.json(habits, {
       status: 200,
     });
