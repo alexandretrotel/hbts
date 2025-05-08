@@ -25,9 +25,6 @@ export function useCompleteGoodHabits() {
     const logDates = habitLogs.map((log) => new Date(log.date));
     const minDate = new Date(Math.min(...logDates.map((d) => d.getTime())));
     const maxDate = new Date(Math.max(...logDates.map((d) => d.getTime())));
-    const logDateStrings = new Set(
-      logDates.map((d) => d.toISOString().split("T")[0]),
-    );
 
     const dateRange = Array.from(
       {
@@ -39,24 +36,37 @@ export function useCompleteGoodHabits() {
       (_, i) => new Date(minDate.getTime() + i * 1000 * 60 * 60 * 24),
     );
 
-    const streakDays = dateRange.map((date) =>
-      logDateStrings.has(date.toISOString().split("T")[0]),
-    );
-
-    const streakData = summary({ dates: logDates });
+    const streakData = summary({ dates: dateRange });
 
     const totalQuantity = habitLogs.reduce(
       (acc, log) => acc + (log.quantity || 0),
       0,
     );
 
-    const daysSinceStart =
-      (Date.now() - minDate.getTime()) / (1000 * 60 * 60 * 24);
-
+    const daysSinceStart = dateRange.length;
     const projectedYearlyQuantity =
       habit.quantity && daysSinceStart > 0
         ? Math.round((totalQuantity / daysSinceStart) * 365)
         : null;
+
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 0 (Sun) to 6 (Sat)
+    const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+    const monday = new Date(today);
+    monday.setDate(today.getDate() + mondayOffset);
+
+    const weekDates = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(monday);
+      d.setDate(monday.getDate() + i);
+      d.setHours(0, 0, 0, 0);
+      return d.getTime();
+    });
+    const logTimestamps = habitLogs.map((log) => {
+      const d = new Date(log.date);
+      d.setHours(0, 0, 0, 0);
+      return d.getTime();
+    });
+    const streakDays = weekDates.map((date) => logTimestamps.includes(date));
 
     return {
       ...habit,

@@ -28,7 +28,7 @@ export function GoodHabits() {
   }
 
   return (
-    <SectionCard title="Good Habits">
+    <SectionCard title="Good Habits" badge="Weekly">
       {completeHabits.map((habit) => (
         <div key={habit.id} className="space-y-3">
           <div className="flex items-center justify-between">
@@ -44,14 +44,15 @@ export function GoodHabits() {
 
           <div className="flex flex-wrap gap-1">
             {habit.streakDays.map((active, i) => (
-              <div
-                key={i}
-                className={`h-4 w-4 rounded-sm ${
-                  active
-                    ? "bg-emerald-500 dark:bg-emerald-600"
-                    : "bg-zinc-200 dark:bg-zinc-700"
-                }`}
-              />
+              <div key={i} className="flex flex-col items-center">
+                <div
+                  className={`h-4 w-4 rounded-sm ${
+                    active
+                      ? "bg-emerald-500 dark:bg-emerald-600"
+                      : "bg-zinc-200 dark:bg-zinc-700"
+                  }`}
+                />
+              </div>
             ))}
           </div>
 
