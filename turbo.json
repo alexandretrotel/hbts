@@ -1,5 +1,6 @@
 {
   "globalDependencies": [".env"],
+  "globalEnv": ["DATABASE_URL"],
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
   "tasks": {
