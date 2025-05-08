@@ -1,5 +1,7 @@
 import { useGoodHabits } from "@/hooks/use-good-habits";
 import { useGoodHabitsLogs } from "@/hooks/use-good-habits-logs";
+import { getCurrentWeekTimestamps } from "@/utils/get-current-week-timestamps";
+import { getDateRange } from "@/utils/get-date-range";
 import { summary } from "date-streaks";
 
 export function useCompleteGoodHabits() {
@@ -23,50 +25,30 @@ export function useCompleteGoodHabits() {
     }
 
     const logDates = habitLogs.map((log) => new Date(log.date));
-    const minDate = new Date(Math.min(...logDates.map((d) => d.getTime())));
-    const maxDate = new Date(Math.max(...logDates.map((d) => d.getTime())));
-
-    const dateRange = Array.from(
-      {
-        length:
-          Math.ceil(
-            (maxDate.getTime() - minDate.getTime()) / (1000 * 60 * 60 * 24),
-          ) + 1,
-      },
-      (_, i) => new Date(minDate.getTime() + i * 1000 * 60 * 60 * 24),
-    );
-
+    const { minDate, range: dateRange } = getDateRange(logDates);
     const streakData = summary({ dates: dateRange });
 
     const totalQuantity = habitLogs.reduce(
-      (acc, log) => acc + (log.quantity || 0),
+      (sum, log) => sum + (log.quantity || 0),
       0,
     );
 
-    const daysSinceStart = dateRange.length;
+    const daysTracked = dateRange.length;
     const projectedYearlyQuantity =
-      habit.quantity && daysSinceStart > 0
-        ? Math.round((totalQuantity / daysSinceStart) * 365)
+      habit.quantity && daysTracked > 0
+        ? Math.round((totalQuantity / daysTracked) * 365)
         : null;
 
-    const today = new Date();
-    const dayOfWeek = today.getDay(); // 0 (Sun) to 6 (Sat)
-    const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
-    const monday = new Date(today);
-    monday.setDate(today.getDate() + mondayOffset);
-
-    const weekDates = Array.from({ length: 7 }, (_, i) => {
-      const d = new Date(monday);
-      d.setDate(monday.getDate() + i);
-      d.setHours(0, 0, 0, 0);
-      return d.getTime();
-    });
+    const currentWeekTimestamps = getCurrentWeekTimestamps();
     const logTimestamps = habitLogs.map((log) => {
-      const d = new Date(log.date);
-      d.setHours(0, 0, 0, 0);
-      return d.getTime();
+      const date = new Date(log.date);
+      date.setHours(0, 0, 0, 0);
+      return date.getTime();
     });
-    const streakDays = weekDates.map((date) => logTimestamps.includes(date));
+
+    const streakDays = currentWeekTimestamps.map((ts) =>
+      logTimestamps.includes(ts),
+    );
 
     return {
       ...habit,
