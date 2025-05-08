@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClockIcon } from "lucide-react";
+import { useBadHabits } from "@/hooks/use-bad-habits";
 
 export interface BadHabit {
   id: string;
@@ -20,28 +21,19 @@ function formatDuration(seconds: number): string {
 }
 
 export function BadHabits() {
-  const habits: BadHabit[] = [
-    {
-      id: "1",
-      name: "Smoking",
-      stoppedAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000), // 15 days ago
-    },
-    {
-      id: "2",
-      name: "Social Media",
-      stoppedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
-    },
-  ];
+  const { data: habits, isLoading } = useBadHabits();
 
   const [timers, setTimers] = useState<Record<string, string>>({});
 
   useEffect(() => {
+    if (!habits) return;
+
     const updateTimers = () => {
       const newTimers: Record<string, string> = {};
 
       habits.forEach((habit) => {
         const secondsElapsed = Math.floor(
-          (Date.now() - habit.stoppedAt.getTime()) / 1000,
+          (Date.now() - new Date(habit.stoppedAt).getTime()) / 1000,
         );
         newTimers[habit.id] = formatDuration(secondsElapsed);
       });
@@ -54,7 +46,35 @@ export function BadHabits() {
     const intervalId = setInterval(updateTimers, 1000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [habits]);
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col justify-between gap-4">
+        <h2 className="text-2xl font-bold tracking-tight">Bad Habits</h2>
+
+        <Card>
+          <CardContent className="space-y-6">
+            <p>Loading...</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!habits || habits.length === 0) {
+    return (
+      <div className="flex flex-col justify-between gap-4">
+        <h2 className="text-2xl font-bold tracking-tight">Bad Habits</h2>
+
+        <Card>
+          <CardContent className="space-y-6">
+            <p>No bad habits found.</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col justify-between gap-4">
