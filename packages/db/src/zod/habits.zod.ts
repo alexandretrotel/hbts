@@ -1,6 +1,6 @@
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import type { z } from "zod";
-import * as schema from "@/db/schema";
+import * as schema from "../schema/index";
 
 export const selectBadHabitSchema = createSelectSchema(schema.badHabits);
 export const insertBadHabitSchema = createInsertSchema(schema.badHabits);

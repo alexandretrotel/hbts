@@ -10,7 +10,7 @@ export type BadHabit = Awaited<ReturnType<typeof getBadHabits>>[number];
 
 export async function GET() {
   try {
-    const badHabits = await db.select().from(badHabitsTable).execute();
+    const badHabits = await getBadHabits();
     return Response.json(badHabits, {
       status: 200,
     });
