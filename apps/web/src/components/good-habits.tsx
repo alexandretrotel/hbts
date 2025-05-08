@@ -65,7 +65,7 @@ export function GoodHabits() {
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-medium">{habit.name}</h3>
                 <Badge
-                  variant="outline"
+                  variant="secondary"
                   className="flex items-center gap-1 font-normal"
                 >
                   <RepeatIcon className="h-3 w-3" />
