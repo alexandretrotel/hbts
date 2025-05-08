@@ -30,7 +30,7 @@ export function UserProfile() {
   };
 
   return (
-    <div className="rounded-xl bg-card p-6 shadow-sm border">
+    <div className="bg-card rounded-xl border p-6 shadow-sm">
       <div className="flex items-center gap-4">
         <Avatar className="h-16 w-16 border-2 border-zinc-100 dark:border-zinc-700">
           <AvatarImage src={user.avatar || LOGO_URL} alt={user.name} />
