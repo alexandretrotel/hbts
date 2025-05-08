@@ -41,7 +41,7 @@ export function UserProfile() {
               <Progress value={user.progress} className="h-2" />
             </div>
             <span className="text-xs text-zinc-500 dark:text-zinc-400">
-              {user.progress}%
+              {user.progress?.toFixed(0)}%
             </span>
           </div>
         </div>
