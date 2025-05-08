@@ -1,6 +1,6 @@
-import { DefaultMilestoneStrategy, type MilestoneStrategy } from './milestones';
-import type { SelectBadHabit } from '@hbts/db/zod';
-import { formatDate } from './dates';
+import { DefaultMilestoneStrategy, type MilestoneStrategy } from "./milestones";
+import type { SelectBadHabit } from "@hbts/db/zod";
+import { formatDate } from "./dates";
 
 export interface Progress {
   percentage: number;
@@ -33,7 +33,7 @@ export function calculateProgress(
   const now = new Date();
   const totalMs = habits.reduce((sum, habit) => {
     const stoppedAt = habit.stoppedAt || new Date(0);
-    const diffMs = now.getTime() - stoppedAt.getTime();
+    const diffMs = now.getTime() - new Date(stoppedAt).getTime();
     return sum + diffMs;
   }, 0);
 
