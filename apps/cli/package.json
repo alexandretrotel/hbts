@@ -1,6 +1,6 @@
 {
   "name": "@hbts/cli",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "description": "Track bad habits with progress tracking",
   "author": "Alexandre Trotel",
   "license": "MIT",
