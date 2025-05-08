@@ -32,11 +32,14 @@ export function UserProfile() {
         </Avatar>
 
         <div className="flex-1">
-          <h2 className="text-xl font-medium">{user.name}</h2>
-          <div className="mt-2 flex items-center gap-2">
+          <div className="flex items-center gap-4">
+            <h2 className="text-xl font-medium">{user.name}</h2>
             <div className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
               Level {user.level}
             </div>
+          </div>
+
+          <div className="mt-2 flex items-center gap-2">
             <div className="flex-1">
               <Progress value={user.progress} className="h-2" />
             </div>
