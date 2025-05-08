@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClockIcon } from "lucide-react";
 
-interface BadHabit {
+export interface BadHabit {
   id: string;
   name: string;
   stoppedAt: Date;
@@ -49,10 +49,8 @@ export function BadHabits() {
       setTimers(newTimers);
     };
 
-    // Initial update
     updateTimers();
 
-    // Update every second
     const intervalId = setInterval(updateTimers, 1000);
 
     return () => clearInterval(intervalId);
