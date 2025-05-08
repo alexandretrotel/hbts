@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { collapseBadHabit, getBadHabits } from '@/services/habits.service';
 import { checkbox, confirm } from '@inquirer/prompts';
-import { formatTimeSince } from '@/utils/progress';
+import { formatTimeSince } from '@hbts/common/progress';
 
 export async function collapseHabitCommand() {
   const spinner = ora('Fetching habits...').start();

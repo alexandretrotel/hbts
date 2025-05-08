@@ -6,7 +6,7 @@ import {
   renderProgressBar,
   renderHabitsTable,
   startLiveTimer,
-} from '@/utils/ui';
+} from '@hbts/common/ui';
 import type { SelectBadHabit } from '@hbts/db/zod';
 
 export async function listHabitsCommand() {

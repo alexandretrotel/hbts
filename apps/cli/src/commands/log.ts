@@ -3,7 +3,7 @@ import {
   getLastLoggedGoodHabit,
   logGoodHabit,
 } from '@/services/habits.service';
-import { isHabitDueToday } from '@/utils/dates';
+import { isHabitDueToday } from '@hbts/common/dates';
 import { confirm, input } from '@inquirer/prompts';
 import chalk from 'chalk';
 import ora from 'ora';

@@ -40,6 +40,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@hbts/common": "workspace:*",
     "@hbts/db": "workspace:*",
     "@inquirer/prompts": "^7.5.0",
     "chalk": "^5.4.1",

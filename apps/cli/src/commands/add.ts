@@ -6,7 +6,7 @@ import {
   insertGoodHabitSchema,
   type HabitType,
 } from '@hbts/db/zod';
-import { formatDate } from '@/utils/dates';
+import { formatDate } from '@hbts/common/dates';
 import { select } from '@inquirer/prompts';
 import { insertBadHabit, insertGoodHabit } from '@/services/habits.service';
 

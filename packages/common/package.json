@@ -1,0 +1,16 @@
+{
+  "name": "@hbts/common",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/utils/*.ts"
+  }
+}

@@ -15,8 +15,8 @@ import { desc, eq } from 'drizzle-orm';
 import {
   DefaultMilestoneStrategy,
   type MilestoneStrategy,
-} from '@/utils/milestones';
-import { calculateProgress } from '@/utils/progress';
+} from '@hbts/common/milestones';
+import { calculateProgress } from '@hbts/common/progress';
 
 export async function insertBadHabit(
   data: InsertBadHabit
