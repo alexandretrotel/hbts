@@ -1,15 +1,15 @@
-import type { FrequencyEnum } from '@hbts/db/zod';
+import type { FrequencyEnum } from "@hbts/db/zod";
 import {
-  differenceInWeeks,
-  differenceInMonths,
-  differenceInYears,
   differenceInDays,
-} from 'date-fns';
+  differenceInMonths,
+  differenceInWeeks,
+  differenceInYears,
+} from "date-fns";
 
 export const formatDate = (date: Date): string =>
-  date.toLocaleString('en-US', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
+  date.toLocaleString("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
   });
 
 export const isHabitDueToday = (
@@ -19,17 +19,16 @@ export const isHabitDueToday = (
   const today = new Date();
   today.setHours(0, 0, 0, 0); // Normalize time to midnight
 
-  const lastLoggedDate = new Date(lastLogged);
-  lastLoggedDate.setHours(0, 0, 0, 0); // Normalize time to midnight
+  lastLogged.setHours(0, 0, 0, 0); // Normalize time to midnight
 
   switch (frequency) {
-    case 'daily':
+    case "daily":
       return differenceInDays(today, lastLogged) >= 1;
-    case 'weekly':
+    case "weekly":
       return differenceInWeeks(today, lastLogged) >= 1;
-    case 'monthly':
+    case "monthly":
       return differenceInMonths(today, lastLogged) >= 1;
-    case 'yearly':
+    case "yearly":
       return differenceInYears(today, lastLogged) >= 1;
     default:
       return false;

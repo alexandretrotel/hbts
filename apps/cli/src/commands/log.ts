@@ -27,6 +27,7 @@ export async function logGoodHabitCommand() {
         const isDueToday = isHabitDueToday(habit.frequency, lastLogged);
 
         if (!isDueToday) {
+          console.log(chalk.yellow(`"${habit.name}" is not due today`));
           ignored++;
           return;
         }

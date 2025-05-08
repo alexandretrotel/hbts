@@ -5,7 +5,6 @@ import type {
   InsertGoodHabit,
   InsertGoodHabitLog,
   SelectBadHabit,
-  SelectHabit,
 } from '@hbts/db/zod';
 import { db } from '@/lib/db';
 import { badHabits, goodHabits, goodHabitsLog } from '@hbts/db/schema';
@@ -42,7 +41,7 @@ export async function insertGoodHabit(data: InsertGoodHabit) {
   return result;
 }
 
-export async function getHabits(): Promise<SelectHabit[]> {
+export async function getHabits() {
   const badHabits = await getBadHabits();
   const goodHabits = await getGoodHabits();
   const allHabits = [...badHabits, ...goodHabits];
