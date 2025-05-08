@@ -29,7 +29,7 @@ export async function logGoodHabitCommand() {
         if (!isDueToday) {
           console.log(chalk.yellow(`"${habit.name}" is not due today`));
           ignored++;
-          return;
+          continue;
         }
       }
 
