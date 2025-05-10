@@ -3,6 +3,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { useProgress } from "@/hooks/use-progress";
+import { Badge } from "./ui/badge";
 
 interface User {
   name: string;
@@ -34,8 +35,11 @@ export function UserProfile() {
         <div className="flex-1">
           <div className="flex items-center gap-4">
             <h2 className="text-xl font-medium">{user.name}</h2>
-            <div className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
-              Level {user.level}
+
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge className="rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                Level {user.level}
+              </Badge>
             </div>
           </div>
 
