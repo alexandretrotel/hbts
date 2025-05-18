@@ -29,7 +29,7 @@ export function GoodHabits() {
   }
 
   return (
-    <SectionCard title="Good Habits" badge="Weekly">
+    <SectionCard title="Good Habits">
       {completeHabits
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((habit, index) => (
