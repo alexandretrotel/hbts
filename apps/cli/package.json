@@ -12,46 +12,38 @@
 		"hbts": "./dist/index.js"
 	},
 	"scripts": {
-		"dev": "bun run src/index.ts",
-		"clean": "rm -rf dist",
-		"build": "bun run clean && bun build src/index.ts --outdir=dist --target=node --minify",
+		"build": "tsdown src/index.ts --format esm --clean",
 		"start": "bun run src/index.ts",
-		"lint": "eslint .",
-		"format": "prettier --write .",
-		"upload": "bun run build && bun publish"
-	},
-	"devDependencies": {
-		"@eslint/js": "^9.25.1",
-		"@eslint/json": "^0.12.0",
-		"@eslint/markdown": "^6.4.0",
-		"@types/bun": "latest",
-		"@types/cli-progress": "^3.11.6",
-		"@typescript-eslint/eslint-plugin": "^8.31.1",
-		"@typescript-eslint/parser": "^8.31.1",
-		"eslint": "^9.25.1",
-		"eslint-config-prettier": "^10.1.2",
-		"eslint-plugin-prettier": "^5.2.6",
-		"globals": "^16.0.0",
-		"prettier": "^3.5.3",
-		"tsx": "^4.19.4",
-		"typescript-eslint": "^8.31.1"
-	},
-	"peerDependencies": {
-		"typescript": "^5.8.3"
+		"lint": "biome check",
+		"lint:fix": "biome check --fix",
+		"format": "biome format"
 	},
 	"dependencies": {
 		"@hbts/common": "workspace:*",
 		"@hbts/db": "workspace:*",
-		"@inquirer/prompts": "^7.5.0",
+		"@inquirer/prompts": "^7.5.3",
 		"chalk": "^5.4.1",
-		"cli-progress": "^3.12.0",
-		"commander": "^13.1.0",
-		"date-fns": "^4.1.0",
+		"commander": "^14.0.0",
 		"dotenv": "^16.5.0",
-		"drizzle-orm": "^0.43.1",
-		"ora": "^8.2.0",
-		"table": "^6.9.0",
-		"zod": "^3.24.3"
+		"drizzle-orm": "^0.44.2",
+		"ora": "^8.2.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@eslint/js": "^9.28.0",
+		"@eslint/json": "^0.12.0",
+		"@eslint/markdown": "^6.5.0",
+		"@types/cli-progress": "^3.11.6",
+		"eslint": "^9.28.0",
+		"eslint-config-prettier": "^10.1.5",
+		"eslint-plugin-prettier": "^5.4.1",
+		"globals": "^16.2.0",
+		"prettier": "^3.5.3",
+		"tsdown": "^0.12.7",
+		"typescript-eslint": "^8.34.0"
+	},
+	"peerDependencies": {
+		"typescript": "^5.8.3"
 	},
 	"files": ["dist"]
 }

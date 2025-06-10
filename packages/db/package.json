@@ -1,41 +1,42 @@
 {
-  "name": "@hbts/db",
-  "module": "index.ts",
-  "main": "index.ts",
-  "type": "module",
-  "version": "1.0.3",
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "clean": "rm -rf dist",
-    "build": "bun run clean && bun build src/index.ts --outdir=dist --target=node --minify",
-    "upload": "bun run build && bun publish",
-    "db:generate": "turbo run db:generate",
-    "db:push": "turbo run db:push",
-    "db:migrate": "turbo run db:migrate",
-    "db:studio": "turbo run db:studio"
-  },
-  "devDependencies": {
-    "@types/bun": "latest",
-    "drizzle-kit": "^0.31.1"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "exports": {
-    ".": "./src/index.ts",
-    "./zod": "./src/zod/index.ts",
-    "./zod/*": "./src/zod/*.ts",
-    "./schema": "./src/schema/index.ts",
-    "./schema/*": "./src/schema/*.ts"
-  },
-  "dependencies": {
-    "@neondatabase/serverless": "^1.0.0",
-    "drizzle-orm": "^0.43.1",
-    "drizzle-zod": "^0.7.1"
-  },
-  "files": [
-    "dist"
-  ]
+	"name": "@hbts/db",
+	"module": "index.ts",
+	"main": "index.ts",
+	"type": "module",
+	"version": "1.0.3",
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "tsdown src/index.ts --format esm,cjs --clean",
+		"lint": "biome check",
+		"lint:fix": "biome check --fix",
+		"format": "biome format",
+		"db:generate": "turbo run db:generate",
+		"db:push": "turbo run db:push",
+		"db:migrate": "turbo run db:migrate",
+		"db:studio": "turbo run db:studio"
+	},
+	"dependencies": {
+		"@neondatabase/serverless": "^1.0.1",
+		"drizzle-orm": "^0.44.2",
+		"drizzle-zod": "^0.8.2",
+		"zod": "^3.25.57"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"drizzle-kit": "^0.31.1",
+		"tsdown": "^0.12.7"
+	},
+	"peerDependencies": {
+		"typescript": "^5.8.3"
+	},
+	"exports": {
+		".": "./src/index.ts",
+		"./zod": "./src/zod/index.ts",
+		"./zod/*": "./src/zod/*.ts",
+		"./schema": "./src/schema/index.ts",
+		"./schema/*": "./src/schema/*.ts"
+	},
+	"files": ["dist"]
 }

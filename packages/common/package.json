@@ -7,12 +7,14 @@
 		"access": "public"
 	},
 	"scripts": {
-		"build": "bun run clean && bun build src/index.ts --outdir=dist --target=node --minify",
-		"clean": "rm -rf dist",
-		"upload": "bun run build && bun publish"
+		"build": "tsdown src/index.ts --format esm,cjs --clean",
+		"lint": "biome check",
+		"lint:fix": "biome check --fix",
+		"format": "biome format"
 	},
 	"devDependencies": {
-		"@types/bun": "latest"
+		"@biomejs/biome": "1.9.4",
+		"tsdown": "^0.12.7"
 	},
 	"peerDependencies": {
 		"typescript": "^5.8.3"

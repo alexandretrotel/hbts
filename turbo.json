@@ -1,70 +1,70 @@
 {
-  "globalDependencies": [".env"],
-  "globalEnv": ["DATABASE_URL"],
-  "$schema": "https://turborepo.com/schema.json",
-  "ui": "tui",
-  "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env.production.local",
-        ".env.local",
-        ".env.production",
-        ".env"
-      ],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
-    },
-    "dev": {
-      "persistent": true,
-      "cache": false,
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env.production.local",
-        ".env.local",
-        ".env.production",
-        ".env"
-      ]
-    },
-    "lint": {
-      "cache": false
-    },
-    "format": {
-      "cache": false
-    },
-    "upload": {
-      "dependsOn": ["^upload"],
-      "outputs": [],
-      "cache": false,
-      "interactive": true
-    },
-    "cli:upload": {
-      "dependsOn": ["^upload"],
-      "outputs": [],
-      "cache": false,
-      "interactive": true
-    },
-    "db:upload": {
-      "dependsOn": ["^upload"],
-      "outputs": [],
-      "cache": false,
-      "interactive": true
-    },
-    "db:push": {
-      "interactive": true,
-      "cache": false
-    },
-    "db:generate": {
-      "interactive": true,
-      "cache": false
-    },
-    "db:migrate": {
-      "interactive": true,
-      "cache": false
-    },
-    "db:studio": {
-      "persistent": true,
-      "cache": false
-    }
-  }
+	"globalDependencies": [".env"],
+	"globalEnv": ["DATABASE_URL"],
+	"$schema": "https://turborepo.com/schema.json",
+	"ui": "tui",
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"inputs": [
+				"$TURBO_DEFAULT$",
+				".env.production.local",
+				".env.local",
+				".env.production",
+				".env"
+			],
+			"outputs": [".next/**", "!.next/cache/**", "dist/**"]
+		},
+		"dev": {
+			"persistent": true,
+			"cache": false,
+			"inputs": [
+				"$TURBO_DEFAULT$",
+				".env.production.local",
+				".env.local",
+				".env.production",
+				".env"
+			]
+		},
+		"lint": {
+			"cache": false
+		},
+		"format": {
+			"cache": false
+		},
+		"upload": {
+			"dependsOn": ["^upload"],
+			"outputs": [],
+			"cache": false,
+			"interactive": true
+		},
+		"cli:upload": {
+			"dependsOn": ["^upload"],
+			"outputs": [],
+			"cache": false,
+			"interactive": true
+		},
+		"db:upload": {
+			"dependsOn": ["^upload"],
+			"outputs": [],
+			"cache": false,
+			"interactive": true
+		},
+		"db:push": {
+			"interactive": true,
+			"cache": false
+		},
+		"db:generate": {
+			"interactive": true,
+			"cache": false
+		},
+		"db:migrate": {
+			"interactive": true,
+			"cache": false
+		},
+		"db:studio": {
+			"persistent": true,
+			"cache": false
+		}
+	}
 }

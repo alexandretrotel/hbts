@@ -1,0 +1,15 @@
+
+
+> @hbts/common@1.0.2 build /Users/trotelalexandre/Documents/projects/hbts/packages/common
+> tsdown src/index.ts --format esm,cjs --clean
+
+[34mℹ[39m tsdown [2mv0.12.7[22m powered by rolldown [2mv1.0.0-beta.11-commit.f051675[22m
+[34mℹ[39m entry: [34msrc/index.ts[39m
+[34mℹ[39m tsconfig: [34mtsconfig.json[39m
+[34mℹ[39m Build start
+[34mℹ[39m Cleaning 2 files
+[34mℹ[39m [34m[ESM][39m [2mdist/[22m[1mindex.js[22m  [2m254.34 kB[22m [2m│ gzip: 48.88 kB[22m
+[34mℹ[39m [34m[ESM][39m 1 files, total: 254.34 kB
+[34mℹ[39m [33m[CJS][39m [2mdist/[22m[1mindex.cjs[22m  [2m254.72 kB[22m [2m│ gzip: 48.89 kB[22m
+[34mℹ[39m [33m[CJS][39m 1 files, total: 254.72 kB
+[32m✔[39m Build complete in [32m66ms[39m

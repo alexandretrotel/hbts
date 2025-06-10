@@ -1,5 +1,5 @@
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import type { z } from "zod";
+import type { z } from "zod/v4";
 import * as schema from "../schema/index";
 
 export const selectBadHabitSchema = createSelectSchema(schema.badHabits);
@@ -16,10 +16,10 @@ export const frequencyEnumSchema = createSelectSchema(schema.frequencyEnum);
 export type FrequencyEnum = z.infer<typeof frequencyEnumSchema>;
 
 export const selectGoodHabitsLogSchema = createSelectSchema(
-  schema.goodHabitsLog
+	schema.goodHabitsLog,
 );
 export const insertGoodHabitLogSchema = createInsertSchema(
-  schema.goodHabitsLog
+	schema.goodHabitsLog,
 );
 export type SelectGoodHabitLog = z.infer<typeof selectGoodHabitsLogSchema>;
 export type InsertGoodHabitLog = z.infer<typeof insertGoodHabitLogSchema>;
