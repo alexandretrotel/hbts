@@ -1,27 +1,25 @@
 {
-  "name": "@hbts/common",
-  "module": "index.ts",
-  "version": "1.0.2",
-  "type": "module",
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "build": "bun run clean && bun build src/index.ts --outdir=dist --target=node --minify",
-    "clean": "rm -rf dist",
-    "upload": "bun run build && bun publish"
-  },
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "exports": {
-    ".": "./src/index.ts",
-    "./*": "./src/utils/*.ts"
-  },
-  "files": [
-    "dist"
-  ]
+	"name": "@hbts/common",
+	"module": "index.ts",
+	"version": "1.0.2",
+	"type": "module",
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "bun run clean && bun build src/index.ts --outdir=dist --target=node --minify",
+		"clean": "rm -rf dist",
+		"upload": "bun run build && bun publish"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.8.3"
+	},
+	"exports": {
+		".": "./src/index.ts",
+		"./*": "./src/utils/*.ts"
+	},
+	"files": ["dist"]
 }
