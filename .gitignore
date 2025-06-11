@@ -5,7 +5,7 @@ node_modules/**
 feedyourai.txt
 
 # Turborepo
-.turbo/**
+**/.turbo/
 
 # output
 out/**
@@ -38,6 +38,3 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # Finder (MacOS) folder config
 .DS_Store
-
-# Turborepo
-**/.turbo/
