@@ -23,5 +23,11 @@
 		".": "./src/index.ts",
 		"./*": "./src/utils/*.ts"
 	},
-	"files": ["dist"]
+	"files": ["dist"],
+	"dependencies": {
+		"chalk": "^5.4.1",
+		"cli-progress": "^3.12.0",
+		"date-fns": "^4.1.0",
+		"table": "^6.9.0"
+	}
 }
